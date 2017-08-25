@@ -56,7 +56,7 @@ public class WorkServiceImpl implements WorkService {
 
     @Transactional
     @Override
-    public void createUnitDtos(List<UnitDto> unitDtos, long workId) {
+    public void createUnitDtos(final List<UnitDto> unitDtos, long workId) {
         logger.log(getLoggerLevel(), "Entering createUnitDtos with unit list size {} and  id: {} ", unitDtos.size(),
                 workId);
         List<Unit> units = new ArrayList<Unit>();
@@ -94,7 +94,7 @@ public class WorkServiceImpl implements WorkService {
 
     // https://www.javacodegeeks.com/2013/05/spring-data-solr-tutorial-pagination.html
     @Override
-    public List<UnitDto> getPage(final long workId, int pageNumber, int pageSize) {
+    public List<UnitDto> getPage(final long workId, final int pageNumber, final int pageSize) {
 
         logger.log(getLoggerLevel(), "Entering getPage with  id: {}, page number {} and pageSize {}", workId, pageNumber,
                 pageSize);
@@ -115,7 +115,7 @@ public class WorkServiceImpl implements WorkService {
     }
 
     @Override
-    public long getTranslatedLinesCount(long workId) {
+    public long getTranslatedLinesCount(final long workId) {
         logger.log(getLoggerLevel(), "Entering getStatistics with  id: {} ", workId);
 
         long translated = unitRepo.countByWorkIdAndTargetState(workId, State.TRANSLATED);
@@ -148,7 +148,7 @@ public class WorkServiceImpl implements WorkService {
     }
 
     @Override
-    public WorkDto getWorkDtoById(long workId) {
+    public WorkDto getWorkDtoById(final long workId) {
         if (workRepo.exists(workId)) {
             WorkDto workDto = convertToDto(workRepo.findOne(workId));
             logger.log(getLoggerLevel(), "Leaving getWorkDtoById with {} ", workDto.toString());
@@ -170,7 +170,7 @@ public class WorkServiceImpl implements WorkService {
     }
 
     @Override
-    public List<WorkDto> getProjectWorkDtos(long projectId) {
+    public List<WorkDto> getProjectWorkDtos(final long projectId) {
         logger.log(getLoggerLevel(), "Entering listProjectWorkDtos with id: {} ", projectId);
         List<WorkDto> workDtos = new ArrayList<WorkDto>();
         List<Work> works = workRepo.findAll().stream().filter(wrk -> projectId == wrk.getProject().getId())
@@ -194,7 +194,7 @@ public class WorkServiceImpl implements WorkService {
     }
 
     @Override
-    public List<WorkDto> getWorkDtos(long groupId) {
+    public List<WorkDto> getWorkDtos(final long groupId) {
         logger.log(getLoggerLevel(), "Entering listWorkDtos with id: {} ", groupId);
         List<WorkDto> workDtos = new ArrayList<WorkDto>();
         List<Work> works = workRepo.findAll().stream().filter(wrk -> groupId == wrk.getGroup().getId())
@@ -232,7 +232,7 @@ public class WorkServiceImpl implements WorkService {
 
     @Transactional
     @Override
-    public void removeWorkDtos(List<WorkDto> entities){
+    public void removeWorkDtos(final List<WorkDto> entities){
         logger.log(getLoggerLevel(), "Entering removeWorkDtos with list size {} ", entities.size());
         entities.stream().forEach(wrk -> {
                 try {
@@ -248,7 +248,7 @@ public class WorkServiceImpl implements WorkService {
 
     @Transactional
     @Override
-    public void updateUnitDtos(List<UnitDto> unitDtos, long workId) {
+    public void updateUnitDtos(final List<UnitDto> unitDtos, final long workId) {
         logger.log(getLoggerLevel(), "Entering updateUnitDtos with unit list size {} and  id: {} ", unitDtos.size(),
                 workId);
         List<Unit> units = new ArrayList<Unit>();
@@ -276,7 +276,7 @@ public class WorkServiceImpl implements WorkService {
     /*
      * UNIT services start
      */
-    private UnitDto convertToDto(Unit unit) {
+    private UnitDto convertToDto(final Unit unit) {
         if (unit == null)
             return null;
         UnitDto unitDto = modelMapper.map(unit, UnitDto.class);
@@ -286,7 +286,7 @@ public class WorkServiceImpl implements WorkService {
     /*
      * WORK services start
      */
-    private WorkDto convertToDto(Work work) {
+    private WorkDto convertToDto(final Work work) {
         if (work == null)
             return null;
         WorkDto workDto = modelMapper.map(work, WorkDto.class);
@@ -298,16 +298,16 @@ public class WorkServiceImpl implements WorkService {
         return unit;
     }
 
-    private void convertToEntity(UnitDto unitDto, Unit unit) {
+    private void convertToEntity(final UnitDto unitDto, final Unit unit) {
         modelMapper.map(unitDto, unit);
     }
 
-    private Work convertToEntity(WorkDto workDto) {
+    private Work convertToEntity(final WorkDto workDto) {
         Work work = modelMapper.map(workDto, Work.class);
         return work;
     }
 
-    private void convertToEntity(WorkDto workDto, Work work) {
+    private void convertToEntity(final WorkDto workDto, final Work work) {
         modelMapper.map(workDto, work);
     }
 
@@ -320,7 +320,7 @@ public class WorkServiceImpl implements WorkService {
 
     @Transactional
     @Override
-    public UnitDto updateTranslatedUnitDto(UnitDto unitDto, long workId) {
+    public UnitDto updateTranslatedUnitDto(final UnitDto unitDto, final long workId) {
 
         logger.log(getLoggerLevel(), "Entering updateTranslatedUnitDto() with unit {} and workId {}", unitDto.toString(), workId);
 

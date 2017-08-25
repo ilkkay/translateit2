@@ -26,8 +26,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -51,11 +53,17 @@ import translateit2.service.LoadingContractor;
 import translateit2.service.ProjectService;
 import translateit2.service.WorkService;;
 
+@ConfigurationProperties(prefix = "test.translateit2")
+@TestPropertySource("test.properties")
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = TranslateIt2v4Application.class)
 public class LoadingContractorIntegrationTests {
-    static final Logger logger = LogManager.getLogger(ProjectServiceIntegrationTestOld.class.getName());
+    static final Logger logger = LogManager.getLogger(LoadingContractorIntegrationTests.class.getName());
 
+    private String dotcms_en_utf8;
+    
+    private String dotcms_fi_utf8;
+    
     private long testPersonId;
 
     private long testGroupId;
@@ -78,7 +86,23 @@ public class LoadingContractorIntegrationTests {
     @Autowired
     private WorkService workService;
 
-    @Before
+    public String getDotcmsEnUtf8() {
+		return dotcms_en_utf8;
+	}
+
+	public void setDotcmsEnUtf8(String dotcmsEnUtf8) {
+		this.dotcms_en_utf8 = dotcmsEnUtf8;
+	}
+
+	public String getDotcmsFiUtf8() {
+		return dotcms_fi_utf8;
+	}
+
+	public void setDotcmsFiUtf8(String dotcmsFiUtf8) {
+		this.dotcms_fi_utf8 = dotcmsFiUtf8;
+	}
+
+	@Before
     public void setup() {
         PersonDto personDto = new PersonDto();
         personDto.setFullName("James Bond");
@@ -132,7 +156,7 @@ public class LoadingContractorIntegrationTests {
         long workId=works.get(0).getId(); //1;
 
         // GIVEN a multipart file
-        File file = new File("d:\\dotcms_en-utf8.properties");
+        File file = new File(dotcms_en_utf8);
         FileInputStream input = new FileInputStream(file);
         MultipartFile multiPartFile = new MockMultipartFile("file",
                 file.getName(), "text/plain", IOUtils.toByteArray(input));
@@ -172,7 +196,7 @@ public class LoadingContractorIntegrationTests {
         long workId=works.get(0).getId(); //1;
 
         // GIVEN a multipart file 
-        File file = new File("d:\\dotcms_en-utf8.properties");
+        File file = new File(dotcms_en_utf8);
         FileInputStream input = new FileInputStream(file);
         MultipartFile multiPartFile = new MockMultipartFile("file",
                 file.getName(), "text/plain", IOUtils.toByteArray(input));
@@ -209,7 +233,7 @@ public class LoadingContractorIntegrationTests {
 
         // GIVEN an uploaded source file
         try {
-            File fileSource = new File("d:\\dotcms_en-utf8.properties");
+            File fileSource = new File(dotcms_en_utf8);
             FileInputStream input1 = new FileInputStream(fileSource);
             MultipartFile multiPartFile = new MockMultipartFile("file1",
                     fileSource.getName(), "text/plain", IOUtils.toByteArray(input1));
@@ -221,7 +245,7 @@ public class LoadingContractorIntegrationTests {
 
         // WHEN load the target file
         try {
-            File fileTarget = new File("d:\\dotcms_fi-utf8.properties");
+            File fileTarget = new File(dotcms_fi_utf8);
             FileInputStream input2 = new FileInputStream(fileTarget);
             MultipartFile multiPartFile = new MockMultipartFile("file2",
                     fileTarget.getName(), "text/plain", IOUtils.toByteArray(input2));
@@ -259,13 +283,13 @@ public class LoadingContractorIntegrationTests {
 
         // GIVEN uploaded source and target files
         try {
-            File fileSource = new File("d:\\dotcms_en-utf8.properties");
+            File fileSource = new File(dotcms_en_utf8);
             FileInputStream input1 = new FileInputStream(fileSource);
             MultipartFile multiPartFile1 = new MockMultipartFile("file1",
                     fileSource.getName(), "text/plain", IOUtils.toByteArray(input1));
             loadingContractor.uploadSource(multiPartFile1, workId);
 
-            File fileTarget = new File("d:\\dotcms_fi-utf8.properties");
+            File fileTarget = new File(dotcms_fi_utf8);
             FileInputStream input2 = new FileInputStream(fileTarget);
             MultipartFile multiPartFile2 = new MockMultipartFile("file2",
                     fileTarget.getName(), "text/plain", IOUtils.toByteArray(input2));
@@ -309,7 +333,7 @@ public class LoadingContractorIntegrationTests {
 
         // and WHEN we have loaded a multipart file
         try {
-            File file = new File("d:\\dotcms_en-utf8.properties");
+            File file = new File(dotcms_en_utf8);
             FileInputStream input = new FileInputStream(file);
             MultipartFile multiPartFile = new MockMultipartFile("file",
                     file.getName(), "text/plain", IOUtils.toByteArray(input));

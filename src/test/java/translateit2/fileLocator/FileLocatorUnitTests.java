@@ -33,7 +33,7 @@ public class FileLocatorUnitTests {
     List<Path> newLocation = new ArrayList<Path>();
 
     private String testPermanentDir = "permanentDir"; 
-    private String testRootPermanentDir = "D:\\sw-tools\\STS\\TranslateIT2v4\\TranslateIT2v4";
+    private String testRootPermanentDir ="D:\\sw-tools\\STS\\testRoot"; 
 
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {

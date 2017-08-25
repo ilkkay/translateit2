@@ -9,12 +9,12 @@ import translateit2.languagefile.LanguageFileFormat;
 
 public interface FileLocator {
     
-    Path createFileIntoPermanentFileSystem(List<String> downloadFileAsList, LanguageFileFormat format,  
-            Charset charset);
+    Path createFileIntoPermanentFileSystem(final List<String> downloadFileAsList, 
+    		final LanguageFileFormat format,  final Charset charset);
     
-    Path moveUploadedFileIntoPermanentFileSystem(Path uploadedFile,
-            LanguageFileFormat format);
+    Path moveUploadedFileIntoPermanentFileSystem(final Path uploadedFile,
+            final LanguageFileFormat format);
     
-    void deleteFileFromPermanentFileSystem(Path fileToDeletePath);
+    void deleteFileFromPermanentFileSystem(final Path fileToDeletePath);
     
 }

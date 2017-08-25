@@ -159,7 +159,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public PersonDto getPersonDtoByPersonName(String name) {
+    public PersonDto getPersonDtoByPersonName(final String name) {
         logger.log(getLoggerLevel(), "Entering getPersonDtoByPersonName with {}", name.toString());
         Optional<Person> perPerson = personRepo.findByFullName(name);
         PersonDto personDto = convertToDto(perPerson.get());
@@ -176,7 +176,7 @@ public class ProjectServiceImpl implements ProjectService {
      */
     @Transactional
     @Override
-    public ProjectDto createProjectDto(ProjectDto entity, String personName) {
+    public ProjectDto createProjectDto(final ProjectDto entity, final String personName) {
         logger.log(getLoggerLevel(), "Entering createProjectDto with {}", 
                 entity.toString(),personName);
 
@@ -192,7 +192,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public ProjectDto getProjectDtoById(long projectId) {
+    public ProjectDto getProjectDtoById(final long projectId) {
         logger.log(getLoggerLevel(), "Entering getProjectDtoById with id: {}", projectId);
 
         if (projectRepo.exists(projectId)) {
@@ -207,7 +207,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public ProjectDto getProjectDtoByProjectName(String projectName) {
+    public ProjectDto getProjectDtoByProjectName(final String projectName) {
         logger.log(getLoggerLevel(), "Entering getProjectDtoByProjectName with {}", projectName);
         Optional<Project> project = projectRepo.findByName(projectName);
         if (project.isPresent()) {
@@ -249,7 +249,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public List<ProjectDto> getProjectDtos(long personId) {
+    public List<ProjectDto> getProjectDtos(final long personId) {
         logger.log(getLoggerLevel(), "Entering listProjectDtos with id: {}", personId);
         List<ProjectDto> projectDtos = new ArrayList<ProjectDto>();
         List<Project> projects = projectRepo.findAll().stream().filter(prj -> personId == prj.getPerson().getId())
@@ -265,7 +265,7 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Transactional
     @Override
-    public void removeProjectDto(long projectId) {
+    public void removeProjectDto(final long projectId) {
         logger.log(getLoggerLevel(), "Entering removeProjectDto with id: {}", projectId);
         if (projectRepo.exists(projectId)) {
             List<Work> allWorks = workRepo.findByProjectId(projectId);
@@ -281,7 +281,7 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Transactional
     @Override
-    public void removeProjectDtos(List<ProjectDto> entities) {
+    public void removeProjectDtos(final List<ProjectDto> entities) {
         logger.log(getLoggerLevel(), "Entering removeProjectDtos with list size: {}", entities.size());
         entities.stream().forEach(prj -> {
             try {
@@ -307,7 +307,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public Map<Long, Integer> getWorkCountPerProject(String personName) {
+    public Map<Long, Integer> getWorkCountPerProject(final String personName) {
 
         long personId=personRepo.findByFullName(personName).get().getId();
         List<Project> projects = projectRepo.findByPersonId(personId);
@@ -326,31 +326,31 @@ public class ProjectServiceImpl implements ProjectService {
      * PROJECT ends
      */
 
-    private FileInfo convertToEntity(FileInfoDto fileInfoDto) {
+    private FileInfo convertToEntity(final FileInfoDto fileInfoDto) {
         FileInfo info = modelMapper.map(fileInfoDto, FileInfo.class);
         return info;
     }
 
-    private Info convertToEntity(InfoDto infoDto) {
+    private Info convertToEntity(final InfoDto infoDto) {
         Info info = modelMapper.map(infoDto, Info.class);
         return info;
     }
 
-    private Person convertToEntity(PersonDto personDto) {
+    private Person convertToEntity(final PersonDto personDto) {
         Person person = modelMapper.map(personDto, Person.class);
         return person;
     }
 
-    private Project convertToEntity(ProjectDto projectDto) {
+    private Project convertToEntity(final ProjectDto projectDto) {
         Project project = modelMapper.map(projectDto, Project.class);
         return project;
     }
 
-    private void convertToEntity(ProjectDto projectDto, Project project) {
+    private void convertToEntity(final ProjectDto projectDto, final Project project) {
         modelMapper.map(projectDto, project);
     }
 
-    private TranslatorGroup convertToEntity(TranslatorGroupDto groupDto) {
+    private TranslatorGroup convertToEntity(final TranslatorGroupDto groupDto) {
         TranslatorGroup group = modelMapper.map(groupDto, TranslatorGroup.class);
         return group;
     }
@@ -362,21 +362,21 @@ public class ProjectServiceImpl implements ProjectService {
         return infoDto;
     }
 
-    private PersonDto convertToDto(Person person) {
+    private PersonDto convertToDto(final Person person) {
         if (person == null)
             return null;
         PersonDto personDto = modelMapper.map(person, PersonDto.class);
         return personDto;
     }
 
-    private FileInfoDto convertToDto(FileInfo info) {
+    private FileInfoDto convertToDto(final FileInfo info) {
         if (info == null)
             return null;
         FileInfoDto infoDto = modelMapper.map(info, FileInfoDto.class);
         return infoDto;
     }
 
-    private TranslatorGroupDto convertToDto(TranslatorGroup group) {
+    private TranslatorGroupDto convertToDto(final TranslatorGroup group) {
         if (group == null)
             return null;
         TranslatorGroupDto groupDto = modelMapper.map(group, TranslatorGroupDto.class);

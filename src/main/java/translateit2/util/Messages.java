@@ -34,7 +34,7 @@ public class Messages {
     }
 
     // used in tests that will be using english
-    public void resetLocale(Locale locale) {
+    public void resetLocale(final Locale locale) {
         accessor = new MessageSourceAccessor(messageSource, locale);
     }
 
@@ -48,7 +48,7 @@ public class Messages {
         this.messageSource = messageSource;
     }
 
-    public String get(String code) {
+    public String get(final String code) {
         String msg = "";
         try {
             msg = accessor.getMessage(code);
@@ -59,7 +59,7 @@ public class Messages {
         return msg;
     }
 
-    public String get(String code, Locale locale) {
+    public String get(final String code, final Locale locale) {
         String msg = "";
         try {
             msg = accessor.getMessage(code,locale);
@@ -69,7 +69,7 @@ public class Messages {
         return msg;
     }
     
-    public String get(String code, String[] args) {
+    public String get(final String code, final String[] args) {
         String msg = null;
         try {
             msg = accessor.getMessage(code, args);
@@ -86,7 +86,7 @@ public class Messages {
     //
     // Segment size must be between {0} and {1} characters
     //
-    public String getPart(String code) {
+    public String getPart(final String code) {
         String msg = null;
         try {
             msg = accessor.getMessage(code);

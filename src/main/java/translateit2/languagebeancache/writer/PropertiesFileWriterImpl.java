@@ -25,7 +25,7 @@ public class PropertiesFileWriterImpl implements LanguageFileWriter {
     public void write() { }
     
     @Override
-    public void createDownloadFile(Path tmpFilePath, List<String> downloadFileAsList) {
+    public void createDownloadFile(final Path tmpFilePath, final List<String> downloadFileAsList) {
 
             try {
                 Files.write(tmpFilePath, downloadFileAsList);
@@ -36,7 +36,7 @@ public class PropertiesFileWriterImpl implements LanguageFileWriter {
     
 
     @Override
-    public  List<String> mergeWithOriginalFile(Map<String, String> map, List<String> inLines) {
+    public  List<String> mergeWithOriginalFile(final Map<String, String> map, final List<String> inLines) {
         
         List<String> outLines = new ArrayList<String>();
         boolean isFirstLine = true; // <= optional byte order mark (BOM)
@@ -55,7 +55,7 @@ public class PropertiesFileWriterImpl implements LanguageFileWriter {
         return outLines;
     }
 
-    private String getKey(String line) {
+    private String getKey(final String line) {
         String parts[] = line.split("=");
         if (parts.length < 2)
             return null;
@@ -63,18 +63,18 @@ public class PropertiesFileWriterImpl implements LanguageFileWriter {
             return parts[0].trim();
     }
     
-    private boolean isKeyValuePair(String line) {
+    private boolean isKeyValuePair(final String line) {
         if (getKey(line) != null)
             return true;
         else
             return false;
     }
     
-    private boolean isCommentLine(String line) {
+    private boolean isCommentLine(final String line) {
         return (line.trim().startsWith("#") || line.trim().startsWith("<"));
     }
 
-    private boolean isEmptyLine(String line) {
+    private boolean isEmptyLine(final String line) {
         return line.isEmpty();
     }
 

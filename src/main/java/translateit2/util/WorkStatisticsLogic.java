@@ -13,9 +13,6 @@ public class WorkStatisticsLogic {
     @Autowired
     UnitRepository unitRepo;
     
-    @Autowired
-    WorkRepository workRepo;
-    
     public ViewStatistics getStatistics(final long workId) {
         ViewStatistics stats = new ViewStatistics();
         
@@ -30,18 +27,4 @@ public class WorkStatisticsLogic {
         return stats;
     }
 
-    /*
-    public void updateProgress(final long workId) {
-        
-        long translated = unitRepo.countByWorkIdAndTargetState(workId, State.TRANSLATED);
-        long needsReview = unitRepo.countByWorkIdAndTargetState(workId, State.NEEDS_REVIEW);
-        long total = unitRepo.countByWorkId(workId);
-        
-        double progress = 1.0 * (translated + needsReview ) / total;
-        
-        Work work = workRepo.findOne(workId);
-        work.setProgress(progress);
-        workRepo.save(work);
-    }
-    */
 }

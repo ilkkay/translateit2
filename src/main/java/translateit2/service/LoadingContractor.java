@@ -13,11 +13,11 @@ import translateit2.exception.TranslateIt2Exception;
 @Validated
 public interface LoadingContractor {
 
-    Stream <Path> downloadTarget(long workId);
+    Stream <Path> downloadTarget(final long workId);
     
-    void uploadSource(MultipartFile file, long workId);
+    void uploadSource(final MultipartFile file, final long workId);
     
-    void removeUploadedSource(long workId);
+    void removeUploadedSource(final long workId);
     
-    void uploadTarget(MultipartFile file, long workId);
+    void uploadTarget(final MultipartFile file, final long workId);
 }

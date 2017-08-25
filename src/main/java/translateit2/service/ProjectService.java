@@ -30,33 +30,33 @@ public interface ProjectService {
     /**
      * Project
      */
-    ProjectDto createProjectDto(@Valid final ProjectDto entity,String personName);
+    ProjectDto createProjectDto(@Valid final ProjectDto entity,final String personName);
     
     void removePersonDto(final long personId);
     
-    TranslatorGroupDto getGroupDtoByName(String name);
+    TranslatorGroupDto getGroupDtoByName(final String name);
     
     void removeGroupDto(final long groupId);
 
-    PersonDto getPersonDtoByPersonName(String personName);
+    PersonDto getPersonDtoByPersonName(final String personName);
 
     ProjectDto getProjectDtoById(long projectId);
 
-    ProjectDto getProjectDtoByProjectName(String projectName);
+    ProjectDto getProjectDtoByProjectName(final String projectName);
 
     long getProjectDtoCount();
 
-    long getProjectDtoCountByPerson( long personId);
+    long getProjectDtoCountByPerson(final long personId);
     
-    Map<Long, Integer> getWorkCountPerProject(String personName);
+    Map<Long, Integer> getWorkCountPerProject(final String personName);
 
     List<ProjectDto> getAllProjectDtos();
 
-    List<ProjectDto> getProjectDtos(long personId);
+    List<ProjectDto> getProjectDtos(final long personId);
 
     void removeProjectDto(final long projectId);
     
-    void removeProjectDtos(@Valid List<ProjectDto> entities);
+    void removeProjectDtos(@Valid final List<ProjectDto> entities);
 
     ProjectDto updateProjectDto(@Valid final ProjectDto entity);
 }

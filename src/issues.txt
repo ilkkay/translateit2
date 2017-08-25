@@ -141,7 +141,9 @@ java.lang.NullPointerException: null <= ModelAndView container is null
 
 64) cleanappiin poista koodit jotka eivät ole käytössä, koska ne löytyvät gitistä DONE
 
-65) validator => service-tasolle KESKEN
+65) validator => service-tasolle DONE
+
+66) Tarkista testifunktioiden nimeämiset DONE
 
 + testauksen koodikirjaston scopeiksi test ??? 
     vrt. https://blog.pragmasphere.com/2014/06/05/maven-and-test-dependencies/
@@ -159,27 +161,14 @@ Korjaa seuraavat:
 
   + tutki virhekoodin palauttaminen        
           
-  + Kun teet hakuja niin käytä kyselyrakennetta url-poluissa esim. /cars?color=blue&type=sedan&doors=4
-
-  + Tarkista testifunktioiden nimeämiset
-
   + Älä käytä hash-symbolia url-polussa (tehdään uuden Angular-sovelluksen yhteydessä)
 
   + Korjaa service-tasot niin että sivulle voi palata suoraan kirjanmerkin avulla     
   
-  + täydennä ja korjaa validioinnit
+  + täydennä ja korjaa validioinnit embedded @NotNull
   
   + Jos rajapinnoissa käytetään id:tä niin tarkista ettei toteutuneessa polussa ole turhia entiteettihakuja.
   
-  + Käytä tätä tyyppiä validoinnissa
-
-public class Name {
-    @NotNull
-    @Size(min=1, max=16)
-    private String firstname;
-}
-
-  + poistuvatko kaikki info kentät kun projekti poistetaan
   
          
         

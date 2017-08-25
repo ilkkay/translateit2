@@ -33,7 +33,7 @@ public class PropertiesFileReaderImpl implements LanguageFileReader {
     }
 
     @Override
-    public HashMap<String, String> getSegments(Path inputPath, Charset charset) {
+    public HashMap<String, String> getSegments(final Path inputPath, final Charset charset) {
         HashMap<String, String> map = new LinkedHashMap<String, String>();
         OrderedProperties srcProp = new OrderedProperties();
 
@@ -55,7 +55,7 @@ public class PropertiesFileReaderImpl implements LanguageFileReader {
     }
 
     @Override
-    public List<String> getOriginalFileAsList(Path storedOriginalFile, Charset charSet) {
+    public List<String> getOriginalFileAsList(final Path storedOriginalFile, final Charset charSet) {
 
         try {
             return Files.readAllLines(storedOriginalFile, charSet);
