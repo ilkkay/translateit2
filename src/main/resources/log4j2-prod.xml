@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration xmlns="http://logging.apache.org/log4j/2.0/config"  monitorInterval="60">
+	<Properties>
+    	<Property name="log-path">logs</Property>
+    	<Property name="archive">${log-path}/archive</Property>
+	</Properties>
+
+    <Appenders>
+        <File name="FILE" fileName="${log-path}/xmlfilelog.log" append="true">
+            <PatternLayout pattern="%d{MM.dd.yyyy HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </File>
+        <Console name="STDOUT" target="SYSTEM_OUT">
+        <!-- https://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/PatternLayout.html -->
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>        
+			<!-- <PatternLayout pattern="%-5p | %d{yyyy-MM-dd HH:mm:ss} | [%t] %C{2} (%F:%L) - %m%n"/> -->           
+        </Console>
+    </Appenders>
+
+    <Loggers>
+        <Logger name="translateit2v4" level="debug"/>
+
+        <Root level="info">
+            <AppenderRef ref="STDOUT"/>
+            <AppenderRef ref="FILE"/>
+        </Root>
+    </Loggers>
+</Configuration>

@@ -1,0 +1,17 @@
+target/
+upload-dir/
+download-dir/
+permanent-dir/
+logs/
+
+
+!.mvn/wrapper/maven-wrapper.jar
+
+### STS ###
+.metadata/
+.apt_generated
+#.classpath
+.factorypath
+#.project
+.settings
+.springBeans

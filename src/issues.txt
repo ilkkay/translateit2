@@ -1,0 +1,186 @@
+﻿Kommentit 30.5.2017
+
+1) autoIndent => soft tabeiksi => DONE
+
+2) commandLineRunneria pois => Käytä PostConstractia ja tee bean jossa Autowired projectService jne. DONE
+    
+3) init()-metodeja ei käytetä vaan PostConstructia DONE
+
+4) appin beanit temaattiseksi config-luokiksi ja autowiren avulla tarvittavat servicet tms. DONE
+
+5) nimeämiset kuvaaviksi (StorageService => FileLoaderService jne.) DONE
+
+6) tutki PathResource () filestorage (file => resource) vrt. ApplicationContextAware ja ResourceLoaderAware KESKEN
+
+7) @ConfigurationPropertiesin yhteydessä käytä prefixinä pakettia tms. Esim. "storage" => 
+    "translateit2.fileloader" => translateit2.fileloader.location = upload-dir4 DONE
+
+8) finally testaa ettei suljettaessa ole kyseessä null stream.  DONE käyttämällä try-with-resource !!
+
+9) try catch lohkot sen mukaan, mitkä ovat seuraukset. Jos sama seuruas niin yksi try-catch lohko.
+ (tutki ISO8859TestLoader ja ISO8859ValidatorImpl-luokkaa KESKEN)
+
+10) ISO8859Storage => Iso8859Storage DONE
+
+11) isFormatSupported -pois koska ei ole käytössä DONE
+
+12) resurssit resourcen alle DONE
+
+13) refaktoroi testit java-testin alle DONE
+ 
+14) fileloaderin throws IOException pois ja tilalle throws FileLoaderException DONE
+
+15) column text (ei tuettu kaikissa kannoissa)  => string length = 10000 DONE
+
+16) sourceText => source_text, jotta toimii kaikilla kannoilla KESKEN
+Ongelma Optional<Person> findByFullName(@Param("fullName") String fullName);
+Ei toimi jos full_name. Ongelma myös kun serialNumber => serial_number
+
+17) Yksinkertaista enumit DONE mutta tutki vähän lisää
+
+18) project service jaettava kahtia toinen olisi workservice DONE
+
+19) turhat intialisoinnit pois DONE
+
+20) palauta syvemmältä vain virhekoodit älä virheviestejä. DONE filestoragen osalta, muuta poikkeusten hallinta kesken
+
+21) @Autowired ilman setteriä on DONE, mutta mock-rakenteet voivat tarvita setterin esim. Messagesin
+    alustus testeissä
+
+22) Korjaa Controllerien annotoinnit Rest-alkuisiksi, missä tarvitaan DONE
+
+23) korjaa turhat interface public metodi -määritykset pois DONE
+
+24) abstract factory bean joka palauttaa beaneja DONE
+
+25) LanguageFileStorage on ajateltava uudestaan. Perusinfra DONE
+
+26) isValid miel. return true kuin return isValid DONE  
+
+27) mieti vertikaali spacingin käyttöä DONE paitsi languagFileService-toimintojen osalta.
+
+28) turhat intialisoinnit pois DONE sama kuin edellä
+
+29) metodit ei saa tehdä kahta asiaa yhtäaikaa!! DONE (getProDtoCount korjattu)
+
+30) virhekoodit vai virheilmoitukset DONE (jos ratkaisu kelpaa)
+
+31) määrittele muuttujat niin lähelle toimivaa koodia kuin mahdollista DONE (paitsi languageService)
+
+32) javadoc ei esitä private metodien tietoja, joten (storage), siirrä public lähelle DONE
+
+33) refaktoroi lyhenteet pois luokkien nimistä DONE (lng => language!)
+
+34) Iso8859Storage fieldit ensin ja lopuksi setterit DONE. Mutta onko java-luokan rakenne sama kuin c#:ssa
+https://stackoverflow.com/questions/150479/order-of-items-in-classes-fields-properties-constructors-methods
+entä Eclipsen tai Idean järjestys ???
+
+35) Onko FileLoaderExceptionissa ongelmaa?? KESKEN 
+[http-nio-auto-1-exec-1] WARN  [ExceptionHandlerExceptionResolver] 
+- Failed to invoke @ExceptionHandler method: public org.springframework.http.ResponseEntity<?> 
+    translateit2.web.FileLoaderController.handleStorage(translateit2.fileloader.FileLoaderException)
+java.lang.NullPointerException: null <= ModelAndView container is null
+
+
+36) sql-päiväyksen konvertointi suoraan dependencyn avulla DONE ja toimii
+
+37) tämä pitää korjata! LocalDate expected = LocalDate.parse("2017-10-07");
+    niin että ei tarvitse käsin asettaa joka kerta DONE  
+  
+39) deleteUploadedFiles() ei ole käytössä, joten upload-hakemistoon kerääntyy tiedostoja DONE
+
+40) lisää public String toString() { return ToStringBuilder...} entiteetteidin a DTO:ihin DONE
+
+41) fileNameResolver, LanguageFileValidator ja LanguageFileReader + languageBeanCache ja niiden yksikkötestit
+
+42) fileLocator ja propertiesFileReader + languageBeanCache ja niiden yksikkötestit
+
+43) poikkeusten hallinan käsittely
+
+44) uusi uploadSourceTodatabse()-metodi
+
+45) testaa storeToUploadDirectory-metodia, lisätty yksikkötestit getPathsOfDownloadableFiles deleteUploadedFile DONE
+
+46) assertThat(p.getParent().toString(), is(equalTo("upload-dir3"))); 
+    korjaa upload-dir3 test.properies-tiedostoon DONE
+    
+47) miksi project entiteetistä puuttuu relaaton work-entiteetin kanssa. 
+    Workissä pitäisi olla @ManyToOne Project project DONE
+    
+48) korjaa class Messagesin locale käyttö DONE
+
+49) UnitValidatorissa ja Workvalidatorsissa on outo setteri!! DONE
+
+50) uploadTarget KESKEN
+
+51) languageBeanCache refaktoroitu
+
+52) FileLoaderExceotion handler uudistettu
+
+53) download target DONE
+
+54) Dtoita tarjotaan ulospäin niitä ei näy sisäisisssä koodeissa Kts. uusi versio DONE
+
+55) virheilmoitukset käytä parametreja kaarisulut ja numerot KESKEN
+
+56) controller-taso ei sisällä logiikkaa vain service-tason komentoja upload ja download DONE 
+
+57) SIIVOUS ALKAA
+
+58) SIIVOUS PÄÄTTYNYT
+
+59) päivitetty ErrorHandler
+
+60) restProject ja restWorkController sekä fileInfon päivitys
+
+61) korjaa createProjectDto(project,"Ilkka","No info text yet") DONE
+
+62) View-tasolle toimitettavat oliot tulisi nimetä kuvaavasti =>esim. viewProjects DONE
+
+63) Älä laita useampaa transaktiota saman rest tms. tason kutsuun esim. createProjectDto Rest-tasolla DONE
+
+64) cleanappiin poista koodit jotka eivät ole käytössä, koska ne löytyvät gitistä DONE
+
+65) validator => service-tasolle KESKEN
+
++ testauksen koodikirjaston scopeiksi test ??? 
+    vrt. https://blog.pragmasphere.com/2014/06/05/maven-and-test-dependencies/
+
++ tutki method reference :: (<= lambda)
+
++ annotoinnit gettereihin riittää koska ensi tungetaan ja validointi lukee ne ??
+
++ käytä final virheiden getCharset oma resolver tms. ??
+
+
+================================================================================
+
+Korjaa seuraavat:
+
+  + tutki virhekoodin palauttaminen        
+          
+  + Kun teet hakuja niin käytä kyselyrakennetta url-poluissa esim. /cars?color=blue&type=sedan&doors=4
+
+  + Tarkista testifunktioiden nimeämiset
+
+  + Älä käytä hash-symbolia url-polussa (tehdään uuden Angular-sovelluksen yhteydessä)
+
+  + Korjaa service-tasot niin että sivulle voi palata suoraan kirjanmerkin avulla     
+  
+  + täydennä ja korjaa validioinnit
+  
+  + Jos rajapinnoissa käytetään id:tä niin tarkista ettei toteutuneessa polussa ole turhia entiteettihakuja.
+  
+  + Käytä tätä tyyppiä validoinnissa
+
+public class Name {
+    @NotNull
+    @Size(min=1, max=16)
+    private String firstname;
+}
+
+  + poistuvatko kaikki info kentät kun projekti poistetaan
+  
+         
+        
+       

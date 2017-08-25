@@ -1,0 +1,34 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Handling Form Submission</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h2>Translation Units List</h2>  
+
+<table border="2" width="70%" cellpadding="2">  
+<tr><th>ID</th><th>Row</th><th>Source</th><th>Target</th><th>Translate</th><th>Delete</th></tr>    
+   <tr th:each="transu : ${transus}">
+   		<td th:text="${transu.id}"></td>
+   		<td th:text="${transu.rowId}"></td>
+   		<!-- 
+   		<td th:text="${transu.translated}? 'yes' : 'no'"></td>
+   		 -->
+        <td th:text="${transu.segmentId}"></td>
+        <td th:text="${transu.segment}"></td>
+   <!-- 
+   <td><a href="transueditform.html" th:href="@{/edittransu/{transuId}/(transuId=${transu.id})}">Translate</a></td>
+    -->      
+   <!-- 
+   <td><a href="missing.html" th:href="@{/deletetransu(transuId=${transu.id})}">Delete</a></td> 
+    --> 
+    
+   <td><a href="transueditform.html" th:href="@{/edittransu(transuId=${transu.rowId})}">Translate</a></td>
+   <td><a href="missing.html" th:href="@{/deletetransu/{transuId}/(transuId=${transu.rowId})}">Delete</a></td>
+   </tr>
+   </table>  
+   
+   <br/> 
+</body>
+</html>

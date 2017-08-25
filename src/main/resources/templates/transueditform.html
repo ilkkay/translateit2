@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Save or create a new translation unit</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<h2>Translation unit</h2>
+    <form action="#" th:action="@{/viewtransu}" th:object="${transudto}" method="post">
+    	<table>
+    	<tr><td><input type="hidden" th:field="*{id}" /></td></tr>
+    	<tr><td><input type="hidden" th:field="*{loco}" /></td></tr>
+    	<tr><td><input type="hidden" th:field="*{rowId}" /></td></tr>
+    	<tr>
+        	<td>Source:</td>
+            <td><input type="text" th:field="*{sourceSegm}" /></td>
+			<td th:if="${#fields.hasErrors('sourceSegm')}" th:errors="*{sourceSegm}">Source segment required</td>
+		</tr><tr>
+			<td>Target:</td>
+            <td><input type="text" th:field="*{targetSegm}" /></td>
+			<td th:if="${#fields.hasErrors('targetSegm')}" th:errors="*{targetSegm}">Target segment required</td>       
+        </tr>
+        <tr><td><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></td></tr>
+    	
+    	</table>
+    </form>
+</body>
+</html>
