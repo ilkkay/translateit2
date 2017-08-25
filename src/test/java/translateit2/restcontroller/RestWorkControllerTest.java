@@ -1,4 +1,4 @@
-package translateit2;
+package translateit2.restcontroller;
 
 import static org.junit.Assert.fail;
 
@@ -19,6 +19,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
+import translateit2.TranslateIt2v4Application;
 import translateit2.persistence.dto.WorkDto;
 
 

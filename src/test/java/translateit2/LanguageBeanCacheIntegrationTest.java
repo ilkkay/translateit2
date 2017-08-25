@@ -1,4 +1,4 @@
-package translateit2.languagebeancache;
+package translateit2;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -14,6 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import translateit2.TranslateIt2v4Application;
+import translateit2.languagebeancache.LanguageBeanCache;
 import translateit2.languagebeancache.reader.LanguageFileReader;
 import translateit2.languagebeancache.validator.LanguageFileValidator;
 import translateit2.languagebeancache.writer.LanguageFileWriter;

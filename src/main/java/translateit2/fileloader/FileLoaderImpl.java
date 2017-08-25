@@ -46,7 +46,7 @@ public class FileLoaderImpl implements FileLoader, ResourceLoaderAware {
     }
 
     @Override
-    public void deleteUploadedFile(Path fileToDeletePath) {
+    public void deleteUploadedFile(final Path fileToDeletePath) {
         try {
             Files.deleteIfExists(fileToDeletePath);
         } catch (IOException e) {
@@ -60,7 +60,7 @@ public class FileLoaderImpl implements FileLoader, ResourceLoaderAware {
     }
 
     @Override
-    public Path getUploadPath(String filename) {
+    public Path getUploadPath(final String filename) {
         if (Files.notExists(getFullPath(uploadLocation)))
             try {
                 Files.createDirectory(getFullPath(uploadLocation));
@@ -72,10 +72,11 @@ public class FileLoaderImpl implements FileLoader, ResourceLoaderAware {
     }
 
     @Override
-    public Path getDownloadPath(String filename) {
-        if (Files.notExists(getFullPath(downloadLocation)))
+    public Path getDownloadPath(final String filename) {
+    	Path downloadPath = getFullPath(downloadLocation);
+        if (Files.notExists(getFullPath(downloadPath)))
             try {
-                Files.createDirectory(getFullPath(downloadLocation));
+                Files.createDirectory(downloadPath);
             } catch (IOException e) {
                 throw new TranslateIt2Exception(TranslateIt2ErrorCode.CANNOT_CREATE_DOWNLOAD_DIRECTORY);
             }
@@ -84,7 +85,8 @@ public class FileLoaderImpl implements FileLoader, ResourceLoaderAware {
     }
 
     @Override
-    public Stream <Path> storeToDownloadDirectory(Path temporaryFilePath,String downloadFilename) {
+    public Stream <Path> storeToDownloadDirectory(final Path temporaryFilePath,
+    		final String downloadFilename) {
 
         Path downloadFilePath = getDownloadPath(downloadFilename);   
         Path dir = downloadFilePath.getParent();
@@ -117,7 +119,7 @@ public class FileLoaderImpl implements FileLoader, ResourceLoaderAware {
     }
 
     @Override
-    public Resource loadAsResource(String filename) {
+    public Resource loadAsResource(final String filename) {
         try {
             Path file = getUploadPath(filename);
             Resource resource = new UrlResource(file.toUri());
@@ -144,7 +146,7 @@ public class FileLoaderImpl implements FileLoader, ResourceLoaderAware {
     }
 
     @Override
-    public Path storeToUploadDirectory(MultipartFile file) {
+    public Path storeToUploadDirectory(final MultipartFile file) {
         if (file.isEmpty()) 
             throw new TranslateIt2Exception(TranslateIt2ErrorCode.FILE_TOBELOADED_IS_EMPTY);
 
@@ -164,17 +166,17 @@ public class FileLoaderImpl implements FileLoader, ResourceLoaderAware {
 
     @PostConstruct
     private void init() {
-        deleteUploadedFiles();
-
+        deleteUploadedFiles();        
+    }
+    
+    private Path getFullPath(final Path p) {
+    	
         try {
             if (Files.notExists(rootTemporaryLocation)) Files.createDirectory(rootTemporaryLocation);
         } catch (IOException e) {
             throw new TranslateIt2Exception(TranslateIt2ErrorCode.CANNOT_CREATE_ROOT_DIRECTORY, e.getCause());
         }
         
-    }
-    
-    private Path getFullPath(Path p) {
         return rootTemporaryLocation.resolve(p);
     }
 }

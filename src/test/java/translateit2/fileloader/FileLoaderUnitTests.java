@@ -32,7 +32,7 @@ public class FileLoaderUnitTests {
 
     private String testDownloadDir="download-dir";
     
-    private String testRootTemporaryDirectory ="D:\\sw-tools\\STS\\TranslateIT2v4";
+    private String testRootTemporaryDirectory ="D:\\sw-tools\\STS\\testRoot";
 
     @Before
     public void setUp() throws Exception {

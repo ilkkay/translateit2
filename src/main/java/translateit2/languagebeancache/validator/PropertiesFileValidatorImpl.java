@@ -28,19 +28,19 @@ public class PropertiesFileValidatorImpl implements LanguageFileValidator {
     }
 
     @Override
-    public void validateApplicationName(String appName, String expectedApplicationName) {
+    public void validateApplicationName(final String appName, final String expectedApplicationName) {
         if (!(appName.equalsIgnoreCase(expectedApplicationName)))
             throw new TranslateIt2Exception(TranslateIt2ErrorCode.IMPROPER_APPLICATION_NAME_IN_FILE_NAME);
     }
     
     @Override
-    public void validateLocale(Locale appLocale, Locale expectedLocale) {
+    public void validateLocale(final Locale appLocale, final Locale expectedLocale) {
         if (!(appLocale.equals(expectedLocale)))
             throw new TranslateIt2Exception(TranslateIt2ErrorCode.IMPROPER_LOCALE_IN_FILE_NAME);
     }    
     
     @Override
-    public void validateCharacterSet(Path uploadedLngFile, LanguageFileType typeExpected) {
+    public void validateCharacterSet(final Path uploadedLngFile, final LanguageFileType typeExpected) {
 
         boolean isUploadedUTF_8 = true;
         try {
@@ -76,7 +76,7 @@ public class PropertiesFileValidatorImpl implements LanguageFileValidator {
         // UTF-8.");
     }
     
-    private boolean isCorrectCharset(Path uploadedLngFile, Charset charset) {
+    private boolean isCorrectCharset(final Path uploadedLngFile, final Charset charset) {
         try {
             Files.readAllLines(uploadedLngFile, charset);
         } catch (MalformedInputException e) {

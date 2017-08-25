@@ -12,7 +12,7 @@ import translateit2.languagefile.LanguageFileFormat;
 @Component
 public class FileNameResolverImpl implements FileNameResolver{
     @Override
-    public String getApplicationName(String filename) {
+    public String getApplicationName(final String filename) {
         if (filename == null)
             throw new TranslateIt2Exception(TranslateIt2ErrorCode.CANNOT_READ_LANGUAGE_FROM_FILE_NAME);
 
@@ -33,7 +33,7 @@ public class FileNameResolverImpl implements FileNameResolver{
      * 
      */
     @Override
-    public Locale getLocaleFromFilename(String fileName, Predicate<String> p) {
+    public Locale getLocaleFromFilename(final String fileName, Predicate<String> p) {
 
         // check extension
         int extPos = fileName.lastIndexOf('.');
@@ -102,7 +102,8 @@ public class FileNameResolverImpl implements FileNameResolver{
     }
 
     @Override
-    public String getDownloadFilename(String originalFileName, Locale locale, LanguageFileFormat format) {
+    public String getDownloadFilename(final String originalFileName, 
+    		final Locale locale, final LanguageFileFormat format) {
         return originalFileName + "_" + locale.toString() + "." + format.toString();
     }
 }

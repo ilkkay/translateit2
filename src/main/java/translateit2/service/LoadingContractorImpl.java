@@ -86,7 +86,7 @@ public class LoadingContractorImpl implements LoadingContractor {
     private UnitRepository unitRepo;
 
     @Override
-    public Stream <Path> downloadTarget(long workId) {
+    public Stream <Path> downloadTarget(final long workId) {
         if (!(workRepo.exists(workId))) {
             logger.error("Work with id {} not found.", workId);
             throw new TranslateIt2Exception(TranslateIt2ErrorCode.CANNOT_UPLOAD_FILE); // or something
@@ -127,7 +127,7 @@ public class LoadingContractorImpl implements LoadingContractor {
     }
 
     @Override
-    public void uploadTarget(MultipartFile multipartFile, long workId) {
+    public void uploadTarget(final MultipartFile multipartFile, final long workId) {
         if (!(workRepo.exists(workId))) {
             logger.error("Work with id {} not found.", workId);
             throw new TranslateIt2Exception(TranslateIt2ErrorCode.CANNOT_UPLOAD_FILE); // or something
@@ -164,7 +164,7 @@ public class LoadingContractorImpl implements LoadingContractor {
     }
 
     @Override
-    public void uploadSource(MultipartFile multipartFile, long workId) {        
+    public void uploadSource(final MultipartFile multipartFile, final long workId) {        
         if (!(workRepo.exists(workId))) {
             logger.error("Work with id {} not found.", workId);
             throw new TranslateIt2Exception(TranslateIt2ErrorCode.CANNOT_UPLOAD_FILE); // or something
@@ -215,7 +215,7 @@ public class LoadingContractorImpl implements LoadingContractor {
     }
 
     @Transactional
-    private void loadTargetSegmentsToDatabase(HashMap<String, String> segments, final long workId) {
+    private void loadTargetSegmentsToDatabase(final HashMap<String, String> segments, final long workId) {
         List<Unit> units = unitRepo.findAll().stream().filter(unit -> workId == unit.getWork().getId())
                 .collect(Collectors.toList());
         for (Unit unit : units) {
@@ -236,8 +236,9 @@ public class LoadingContractorImpl implements LoadingContractor {
     // or other JDBC wrappers. These JDBC wrappers don't typically throw checked exceptions, 
     // they throw runtime exceptions that wrap the JDBC SQLException types.
     @Transactional //(rollbackOn = Exception.class)
-    private boolean loadSourceSegmentsToDatabase(String originalFileName, String appName, Locale appLocale,
-            Path uploadedFilePath, HashMap<String, String> segments, long workId) {
+    private boolean loadSourceSegmentsToDatabase(final String originalFileName, final String appName, 
+    		final Locale appLocale, final Path uploadedFilePath, final HashMap<String, String> segments, 
+    		long workId) {
 
 
         // upload to database 
@@ -260,37 +261,37 @@ public class LoadingContractorImpl implements LoadingContractor {
     }
 
     @Transactional
-    private Locale getExpectedSourceLocale(long workId) {
+    private Locale getExpectedSourceLocale(final long workId) {
         Project project = workRepo.findOne(workId).getProject();
         return workRepo.findOne(workId).getProject().getSourceLocale();
     }
 
     @Transactional
-    private Locale getExpectedTargetLocale(long workId) {
+    private Locale getExpectedTargetLocale(final long workId) {
         Work work = workRepo.findOne(workId);
         return workRepo.findOne(workId).getLocale();
     }
 
     @Transactional
-    private String getExpectedApplicationName(long workId) {
+    private String getExpectedApplicationName(final long workId) {
         Work work = workRepo.findOne(workId);
         return  work.getOriginalFile();
     }
 
     @Transactional
-    private LanguageFileType getExpectedType(long workId) {
+    private LanguageFileType getExpectedType(final long workId) {
         Work work = workRepo.findOne(workId);
         return  projectRepo.findOne(work.getProject().getId()).getType();
     }
 
     @Transactional
-    private Charset getCharSet(long workId) {
+    private Charset getCharSet(final long workId) {
         return charsetResolver.getProjectCharSet(
                 workRepo.findOne(workId).getProject().getId());
     }
     
     @Transactional
-    private Map<String, String> getSegmentsMap(long workId) {
+    private Map<String, String> getSegmentsMap(final long workId) {
         List<Unit> units = unitRepo.findAll().stream().filter(unit -> workId == unit.getWork().getId())
                 .collect(Collectors.toList());
         Map<String, String> map = new HashMap<String, String>();
@@ -300,13 +301,13 @@ public class LoadingContractorImpl implements LoadingContractor {
     }
 
     @Transactional
-    private LanguageFileFormat getFormat(long workId) {
+    private LanguageFileFormat getFormat(final long workId) {
         Work work = workRepo.findOne(workId);
         return projectRepo.findOne(work.getProject().getId()).getFormat();        
     }
 
     @Transactional
-    private void updateStatus(Status newStatus, long workId) {
+    private void updateStatus(final Status newStatus, final long workId) {
         Work work = workRepo.findOne(workId);
         work.setStatus(newStatus);
         workRepo.save(work);
@@ -323,7 +324,7 @@ public class LoadingContractorImpl implements LoadingContractor {
     }
     
     @Transactional
-    private long updateFileInfo(Path uploadedFilePath, String OriginalFile, long workId) {
+    private long updateFileInfo(final Path uploadedFilePath, final String OriginalFile, long workId) {
         FileInfo fileInfo;
         if (fileInfoRepo.findByWorkId(workId).isPresent())
             fileInfo = fileInfoRepo.findByWorkId(workId).get();
@@ -340,7 +341,7 @@ public class LoadingContractorImpl implements LoadingContractor {
     }
 
     @Transactional
-    private void updateWork(String appName, Status status, long workId) {
+    private void updateWork(final String appName, final Status status, final long workId) {
 
         Work work = workRepo.findOne(workId);
 
@@ -354,7 +355,7 @@ public class LoadingContractorImpl implements LoadingContractor {
     }
 
     @Transactional
-    private int loadSourceSegmentsToDatabase( HashMap<String, String> segments, long workId){
+    private int loadSourceSegmentsToDatabase(final HashMap<String, String> segments, final long workId){
 
         List<Unit> units = new ArrayList<Unit>();
         int serialNum = 0;
@@ -386,7 +387,7 @@ public class LoadingContractorImpl implements LoadingContractor {
         return savedUnits.size();
     }
 
-    private void checkServiceAvailability(long workId) {
+    private void checkServiceAvailability(final long workId) {
         if (!(fileValidatorCache.getService(getFormat(workId)).isPresent())) {
             logger.error("Language file validator for format {} was missing", getFormat(workId));
             throw new TranslateIt2Exception(TranslateIt2ErrorCode.CANNOT_UPLOAD_FILE); // or something
@@ -404,7 +405,7 @@ public class LoadingContractorImpl implements LoadingContractor {
     }
 
     @Override
-    public void removeUploadedSource(long workId) {
+    public void removeUploadedSource(final long workId) {
         
         if (fileInfoRepo.findByWorkId(workId).isPresent()){
             FileInfo fileInfo = fileInfoRepo.findByWorkId(workId).get();

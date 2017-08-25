@@ -10,9 +10,9 @@ import translateit2.languagefile.LanguageFileFormat;
 
 public interface LanguageFileWriter extends LanguageFile <LanguageFileFormat> {
     
-    List<String> mergeWithOriginalFile(Map<String, String> map, List<String> inLines);
+    List<String> mergeWithOriginalFile(final Map<String, String> map, final List<String> inLines);
     
-    void createDownloadFile(Path tmpFilePath,List<String> downloadFileAsList);
+    void createDownloadFile(final Path tmpFilePath,List<String> downloadFileAsList);
     
     void write();
 }

@@ -10,20 +10,21 @@ import translateit2.exception.TranslateIt2Exception;
 
 public interface FileLoader {
 
-    void deleteUploadedFile(Path filePath);
+    void deleteUploadedFile(final Path filePath);
 
     void deleteUploadedFiles();
 
-    Path getUploadPath(String filename);
+    Path getUploadPath(final String filename);
     
-    Path getDownloadPath(String filename);
+    Path getDownloadPath(final String filename);
 
     Stream<Path> getPathsOfDownloadableFiles();
 
-    Resource loadAsResource(String filename);
+    Resource loadAsResource(final String filename);
     
-    Path storeToUploadDirectory(MultipartFile file);
+    Path storeToUploadDirectory(final MultipartFile file);
 
-    Stream <Path> storeToDownloadDirectory(Path temporaryFilePath, String downloadFilename);
+    Stream <Path> storeToDownloadDirectory(final Path temporaryFilePath, 
+    		final String downloadFilename);
     
 }

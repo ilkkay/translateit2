@@ -32,8 +32,8 @@ public class FileLocatorImpl implements FileLocator {
     }
     
     @Override
-    public Path moveUploadedFileIntoPermanentFileSystem(Path uploadedFile, 
-            LanguageFileFormat format) {
+    public Path moveUploadedFileIntoPermanentFileSystem(final Path uploadedFile, 
+            final LanguageFileFormat format) {
         
         // create new path for permanent file storage
         Path outFilePath = getUniquePath(format, getFullPath(rootPermanentDirectory));
@@ -55,7 +55,7 @@ public class FileLocatorImpl implements FileLocator {
         return outFilePath;
     }
 
-    private Path getUniquePath(LanguageFileFormat format, Path rootPath) {
+    private Path getUniquePath(final LanguageFileFormat format, final Path rootPath) {
         //Path test = fileLoaderService
                 
         Path fnamePath = Paths.get(java.util.UUID.randomUUID().toString());
@@ -69,7 +69,7 @@ public class FileLocatorImpl implements FileLocator {
     }
 
     @Override
-    public void deleteFileFromPermanentFileSystem(Path fileToDeletePath) {
+    public void deleteFileFromPermanentFileSystem(final Path fileToDeletePath) {
         try {
             Files.deleteIfExists(fileToDeletePath);
         } catch (IOException e) {
@@ -78,8 +78,8 @@ public class FileLocatorImpl implements FileLocator {
     }
     
     @Override
-    public Path createFileIntoPermanentFileSystem(List<String> downloadFileAsList, 
-            LanguageFileFormat format, Charset charset) {
+    public Path createFileIntoPermanentFileSystem(final List<String> downloadFileAsList, 
+            final LanguageFileFormat format, final Charset charset) {
         
         // create new path for temporary file in permanent storage
         Path outFilePath = getUniquePath(format, getFullPath(rootPermanentDirectory));
@@ -102,14 +102,17 @@ public class FileLocatorImpl implements FileLocator {
     
     @PostConstruct
     private void init() {        
-        try {
+
+    }
+    
+    private Path getFullPath(final Path p) {
+        
+    	try {
             if (Files.notExists(permanentLocation)) Files.createDirectory(permanentLocation);
         } catch (IOException e) {
             throw new TranslateIt2Exception(TranslateIt2ErrorCode.CANNOT_CREATE_ROOT_DIRECTORY, e.getCause());
         }
-    }
-    
-    private Path getFullPath(Path p) {
+    	
         return permanentLocation.resolve(p);
     }
 }
