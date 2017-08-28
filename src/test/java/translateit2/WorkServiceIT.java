@@ -57,8 +57,8 @@ import translateit2.util.MessageLogic;
 @TestPropertySource("test.properties")
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = TranslateIt2v4Application.class)
-public class WorkServiceIntegrationTest {
-    static final Logger logger = LogManager.getLogger(WorkServiceIntegrationTest.class.getName());
+public class WorkServiceIT {
+    static final Logger logger = LogManager.getLogger(WorkServiceIT.class.getName());
 
     private long testPersonId;
 

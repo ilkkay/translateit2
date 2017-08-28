@@ -45,6 +45,11 @@ public class FileLoaderControllerTest {
     public void setUp() throws Exception {
     }
 
+    @Test
+    public void justTesting() {
+        assert(true);
+    }
+
     // some HTTP codes:
     // 302=Found, 405=Method Not Allowed, 201=Created, 500=internal server error
     // 400=Bad Request, 404=Not Found

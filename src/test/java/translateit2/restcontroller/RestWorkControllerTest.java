@@ -39,7 +39,7 @@ public class RestWorkControllerTest {
     private TestRestTemplate restTemplate;
 
     // http://www.concretepage.com/spring/spring-mvc/spring-rest-client-resttemplate-consume-restful-web-service-example-xml-json#postforentity   
-    @Test //@RequestMapping(value = "/work/{id}/sourceFile", method = RequestMethod.POST)
+    //@Test //@RequestMapping(value = "/work/{id}/sourceFile", method = RequestMethod.POST)
     public void shouldUploadFile() {
 
         // WHEN loading empty file

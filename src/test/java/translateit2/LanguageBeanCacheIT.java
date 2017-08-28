@@ -23,7 +23,7 @@ import translateit2.languagefile.LanguageFileFormat;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = TranslateIt2v4Application.class)
 @WebAppConfiguration
-public class LanguageBeanCacheIntegrationTest {
+public class LanguageBeanCacheIT {
     
     @Autowired
     private LanguageBeanCache<LanguageFileFormat, LanguageFileReader> fileReaderCache;

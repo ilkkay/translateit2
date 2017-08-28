@@ -52,8 +52,8 @@ import translateit2.util.WorkStatisticsLogic;
 @TestPropertySource("test.properties")
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = TranslateIt2v4Application.class)
-public class WorkStatisticsLogicIntegrationTest {
-    static final Logger logger = LogManager.getLogger(WorkStatisticsLogicIntegrationTest.class.getName());
+public class WorkStatisticsLogicIT {
+    static final Logger logger = LogManager.getLogger(WorkStatisticsLogicIT.class.getName());
 
     private long testPersonId;
 

@@ -57,8 +57,8 @@ import translateit2.service.WorkService;;
 @TestPropertySource("test.properties")
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = TranslateIt2v4Application.class)
-public class LoadingContractorIntegrationTest {
-    static final Logger logger = LogManager.getLogger(LoadingContractorIntegrationTest.class.getName());
+public class LoadingContractorIT {
+    static final Logger logger = LogManager.getLogger(LoadingContractorIT.class.getName());
 
     private String dotcms_en_utf8;
     

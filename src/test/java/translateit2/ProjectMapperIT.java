@@ -29,7 +29,7 @@ import translateit2.persistence.model.Unit;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = TranslateIt2v4Application.class)
 @WebAppConfiguration
-public class ProjectMapperIntegrationTest {
+public class ProjectMapperIT {
     @Autowired
     private ProjectMapper modelMapper;
 

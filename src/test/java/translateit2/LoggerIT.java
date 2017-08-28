@@ -11,7 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = TranslateIt2v4Application.class)
-public class LoggerIntegrationTest {
+public class LoggerIT {
 
 	@Test
 	public void testPerformSomeTask() throws Exception {
@@ -25,7 +25,7 @@ public class LoggerIntegrationTest {
 	}
 
 	static private class MyLogger {
-		static final Logger logger = LogManager.getLogger(LoggerIntegrationTest.class.getName());
+		static final Logger logger = LogManager.getLogger(LoggerIT.class.getName());
 
 		public void performSomeTask() {
 			logger.log(Level.forName("NOTICE", 450), "This is a notice message from '{}'", this.toString());
