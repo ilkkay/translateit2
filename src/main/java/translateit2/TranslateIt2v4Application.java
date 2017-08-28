@@ -5,6 +5,7 @@ import java.util.Arrays;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -26,12 +27,12 @@ public class TranslateIt2v4Application {
         SpringApplication.run(TranslateIt2v4Application.class, newArgs);
     }
     
-    @Autowired
-    private DatabaseInitializer demoDatabaseInitializer;
+    @Autowired @Qualifier("dev")
+    private DatabaseInitializer databaseInitializer;
 
     @PostConstruct
     private void initializeApplication() {
-        demoDatabaseInitializer.loadDemo();
+        databaseInitializer.loadBootstrapData();
     }
 
     /*

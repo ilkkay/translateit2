@@ -33,6 +33,7 @@ public class Unit implements Serializable {
 
     @Max(10000) 
     @Min(1) 
+    @Column(name = "serial_number")
     private int serialNumber;
 
     @Embedded // @Column(columnDefinition="TEXT")

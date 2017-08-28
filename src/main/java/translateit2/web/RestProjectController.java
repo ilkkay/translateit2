@@ -33,7 +33,6 @@ public class RestProjectController {
     private LanguageServicesConfig languageServices;
 
     // -------------------Create a new Project 
-    // TODO: validation should be on the service side
     // ------------------------------------------
     @RequestMapping(value = "/project/", method = RequestMethod.POST)
     public ResponseEntity<?> createProject(@RequestBody ProjectDto project, UriComponentsBuilder ucBuilder) {

@@ -13,8 +13,11 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 
+import translateit2.LoadingContractorIT;
 import translateit2.exception.TranslateIt2ErrorCode;
 import translateit2.exception.TranslateIt2Exception;
 import translateit2.languagefile.LanguageFileFormat;
@@ -22,10 +25,7 @@ import translateit2.util.OrderedProperties;
 
 @Component
 public class PropertiesFileReaderImpl implements LanguageFileReader {
-
-    public PropertiesFileReaderImpl() {
-        // TODO Auto-generated constructor stub
-    }
+    static final Logger logger = LogManager.getLogger(PropertiesFileReaderImpl.class.getName());
 
     @Override
     public LanguageFileFormat getFileFormat() {
@@ -34,23 +34,28 @@ public class PropertiesFileReaderImpl implements LanguageFileReader {
 
     @Override
     public HashMap<String, String> getSegments(final Path inputPath, final Charset charset) {
+    	logger.debug("Entering getSegments() with file {} and charset {}", 
+    			inputPath.toAbsolutePath().toString(), charset.toString());
+    	
         HashMap<String, String> map = new LinkedHashMap<String, String>();
         OrderedProperties srcProp = new OrderedProperties();
 
         try (InputStream stream = new FileInputStream(inputPath.toString());
                 InputStreamReader isr = new InputStreamReader(stream, charset)) {
-            srcProp.load(isr);
+            
+        	srcProp.load(isr);
+
             Set<String> keys = srcProp.stringPropertyNames();
             // checks for at least one (ASCII) alphanumeric character.
             map = keys.stream().filter(k -> k.toString().matches(".*\\w.*")).collect(Collectors.toMap(k -> k.toString(),
                     k -> srcProp.getProperty(k), (v1, v2) -> v1, LinkedHashMap::new));
 
-            //map.forEach((k, v) -> System.out.println(k + "\n" + v));
-
         } catch (IOException e) {
             throw new TranslateIt2Exception(TranslateIt2ErrorCode.CANNOT_READ_FILE,e.getCause());
         }
 
+    	logger.debug("Leaving getSegments() with map size:{} ", map.size());
+    	
         return map;
     }
 

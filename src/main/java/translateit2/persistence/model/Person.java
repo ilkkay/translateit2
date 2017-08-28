@@ -2,6 +2,7 @@ package translateit2.persistence.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,6 +16,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 public class Person implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    @Column(name = "full_name")
     private String fullName;
 
     @Id

@@ -7,14 +7,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 
+import translateit2.exception.TranslateIt2ErrorCode;
 import translateit2.exception.TranslateIt2Exception;
+import translateit2.languagebeancache.reader.PropertiesFileReaderImpl;
 import translateit2.languagefile.LanguageFileFormat;
 
 @Component
 public class PropertiesFileWriterImpl implements LanguageFileWriter {
-
+    static final Logger logger = LogManager.getLogger(PropertiesFileWriterImpl.class.getName());
 
     @Override
     public LanguageFileFormat getFileFormat() {
@@ -30,28 +34,37 @@ public class PropertiesFileWriterImpl implements LanguageFileWriter {
             try {
                 Files.write(tmpFilePath, downloadFileAsList);
             } catch (IOException e) {
-                throw new TranslateIt2Exception("Could not create file for download");
+                throw new TranslateIt2Exception(TranslateIt2ErrorCode.CANNOT_CREATE_FILE,
+                		"Could not create file for download");
             }        
     }
     
 
     @Override
     public  List<String> mergeWithOriginalFile(final Map<String, String> map, final List<String> inLines) {
-        
+    	logger.debug("Entering mergeWithOriginalFile() with map size {} and list size {}", 
+    			map.size(), inLines.size());
+
         List<String> outLines = new ArrayList<String>();
         boolean isFirstLine = true; // <= optional byte order mark (BOM)
         for (String line : inLines) {
             if ((isEmptyLine(line)) || (isCommentLine(line)) || (isFirstLine)) {
                 outLines.add(line);
                 isFirstLine = false;
-            } else if (isKeyValuePair(line)) {
+            } 
+            
+            else if (isKeyValuePair(line)) {
                 String key = getKey(line);
-                System.out.println(getKey(line) + "=" + map.get(key));
+                logger.debug("Key: {} => value: {} in line: {}",key, map.get(key), line);
                 outLines.add(getKey(line) + "=" + map.get(key));
-            } else
-                throw new TranslateIt2Exception("Could not create file for download");
+            } 
+            
+            else
+                throw new TranslateIt2Exception(TranslateIt2ErrorCode.CANNOT_CREATE_FILE,
+                		"Could not create file for download");
         }
         
+    	logger.debug("Leaving mergeWithOriginalFile() with list size {}", outLines.size());
         return outLines;
     }
 
@@ -77,8 +90,4 @@ public class PropertiesFileWriterImpl implements LanguageFileWriter {
     private boolean isEmptyLine(final String line) {
         return line.isEmpty();
     }
-
-
-    
-
 }

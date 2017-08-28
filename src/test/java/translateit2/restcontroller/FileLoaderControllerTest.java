@@ -61,7 +61,7 @@ public class FileLoaderControllerTest {
         ResponseEntity<String> response = null;
         String responseBody = "";
 
-        // TODO: 500 internal server error <=
+        // 500 internal server error <=
         // javax.validation.ConstraintViolationException
 
         // WHEN loading empty file

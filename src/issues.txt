@@ -10,15 +10,14 @@
 
 5) nimeämiset kuvaaviksi (StorageService => FileLoaderService jne.) DONE
 
-6) tutki PathResource () filestorage (file => resource) vrt. ApplicationContextAware ja ResourceLoaderAware KESKEN
+6) tutki PathResource () filestorage (file => resource) vrt. ApplicationContextAware ja ResourceLoaderAware DONE
 
 7) @ConfigurationPropertiesin yhteydessä käytä prefixinä pakettia tms. Esim. "storage" => 
     "translateit2.fileloader" => translateit2.fileloader.location = upload-dir4 DONE
 
 8) finally testaa ettei suljettaessa ole kyseessä null stream.  DONE käyttämällä try-with-resource !!
 
-9) try catch lohkot sen mukaan, mitkä ovat seuraukset. Jos sama seuruas niin yksi try-catch lohko.
- (tutki ISO8859TestLoader ja ISO8859ValidatorImpl-luokkaa KESKEN)
+9) try catch lohkot sen mukaan, mitkä ovat seuraukset. Jos sama seuruas niin yksi try-catch lohko. DONE
 
 10) ISO8859Storage => Iso8859Storage DONE
 
@@ -32,7 +31,7 @@
 
 15) column text (ei tuettu kaikissa kannoissa)  => string length = 10000 DONE
 
-16) sourceText => source_text, jotta toimii kaikilla kannoilla KESKEN
+16) sourceText => source_text, jotta toimii kaikilla kannoilla DONE
 Ongelma Optional<Person> findByFullName(@Param("fullName") String fullName);
 Ei toimi jos full_name. Ongelma myös kun serialNumber => serial_number
 
@@ -42,7 +41,7 @@ Ei toimi jos full_name. Ongelma myös kun serialNumber => serial_number
 
 19) turhat intialisoinnit pois DONE
 
-20) palauta syvemmältä vain virhekoodit älä virheviestejä. DONE filestoragen osalta, muuta poikkeusten hallinta kesken
+20) palauta syvemmältä vain virhekoodit älä virheviestejä. DONE filestoragen osalta, muuta poikkeusten hallinta DONE
 
 21) @Autowired ilman setteriä on DONE, mutta mock-rakenteet voivat tarvita setterin esim. Messagesin
     alustus testeissä
@@ -75,7 +74,7 @@ Ei toimi jos full_name. Ongelma myös kun serialNumber => serial_number
 https://stackoverflow.com/questions/150479/order-of-items-in-classes-fields-properties-constructors-methods
 entä Eclipsen tai Idean järjestys ???
 
-35) Onko FileLoaderExceptionissa ongelmaa?? KESKEN 
+35) Onko FileLoaderExceptionissa ongelmaa?? DONE (ei koske rest-controlleria)
 [http-nio-auto-1-exec-1] WARN  [ExceptionHandlerExceptionResolver] 
 - Failed to invoke @ExceptionHandler method: public org.springframework.http.ResponseEntity<?> 
     translateit2.web.FileLoaderController.handleStorage(translateit2.fileloader.FileLoaderException)
@@ -111,7 +110,7 @@ java.lang.NullPointerException: null <= ModelAndView container is null
 
 49) UnitValidatorissa ja Workvalidatorsissa on outo setteri!! DONE
 
-50) uploadTarget KESKEN
+50) uploadTarget DONE
 
 51) languageBeanCache refaktoroitu
 
@@ -121,7 +120,7 @@ java.lang.NullPointerException: null <= ModelAndView container is null
 
 54) Dtoita tarjotaan ulospäin niitä ei näy sisäisisssä koodeissa Kts. uusi versio DONE
 
-55) virheilmoitukset käytä parametreja kaarisulut ja numerot KESKEN
+55) virheilmoitukset käytä parametreja kaarisulut ja numerot DONE
 
 56) controller-taso ei sisällä logiikkaa vain service-tason komentoja upload ja download DONE 
 
@@ -145,19 +144,26 @@ java.lang.NullPointerException: null <= ModelAndView container is null
 
 66) Tarkista testifunktioiden nimeämiset DONE
 
-+ testauksen koodikirjaston scopeiksi test ??? 
+67) testauksen koodikirjaston scopeiksi test DONE 
     vrt. https://blog.pragmasphere.com/2014/06/05/maven-and-test-dependencies/
 
-+ tutki method reference :: (<= lambda)
 
-+ annotoinnit gettereihin riittää koska ensi tungetaan ja validointi lukee ne ??
+68) käytä final määritettä poikkeusten propertyissä DONE
 
-+ käytä final virheiden getCharset oma resolver tms. ??
+69) getCharset oma resolver DONE
 
 
+70) annotoinnit gettereihin riittää koska javadoc ei lue private propertyjen edessä olevaa OK
+
+71) täydennä ja korjaa validioinnit DONE (embedded @NotNull kesken)
+  
+72) Jos rajapinnoissa käytetään id:tä niin tarkista ettei toteutuneessa polussa ole turhia entiteettihakuja.
+  
 ================================================================================
 
 Korjaa seuraavat:
+
+  + tutki method reference :: (<= lambda)
 
   + tutki virhekoodin palauttaminen        
           
@@ -165,9 +171,6 @@ Korjaa seuraavat:
 
   + Korjaa service-tasot niin että sivulle voi palata suoraan kirjanmerkin avulla     
   
-  + täydennä ja korjaa validioinnit embedded @NotNull
-  
-  + Jos rajapinnoissa käytetään id:tä niin tarkista ettei toteutuneessa polussa ole turhia entiteettihakuja.
   
   
          

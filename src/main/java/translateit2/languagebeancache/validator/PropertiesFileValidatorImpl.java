@@ -82,7 +82,8 @@ public class PropertiesFileValidatorImpl implements LanguageFileValidator {
         } catch (MalformedInputException e) {
             return false; // do nothing is OK
         } catch (IOException e) {
-            throw new TranslateIt2Exception("Unexpected exception thrown while testing charset of a properties file");
+            throw new TranslateIt2Exception(TranslateIt2ErrorCode.CANNOT_READ_FILE,
+            		"Unexpected exception thrown while testing charset of a properties file");
         }
         return true; // if charset == UTF8 and no exceptions => file is UTF8
     }

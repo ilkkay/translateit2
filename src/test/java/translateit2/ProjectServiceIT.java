@@ -160,7 +160,7 @@ public class ProjectServiceIT {
         prj.setFormat(LanguageFileFormat.PROPERTIES);
         prj.setType(LanguageFileType.UTF_8);
 
-        // WHEN create project with short name
+        // WHEN create project with long name
         try {
             prj.setName("Tr..........................................................");
             prj = projectService.createProjectDto(prj,"James Bond");

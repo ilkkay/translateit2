@@ -16,7 +16,7 @@ import translateit2.persistence.model.Priority;
 import translateit2.service.ProjectService;
 import translateit2.service.WorkService;
 
-@Component
+@Component (value="dev")
 public class DemoDatabaseInitializerImpl implements DatabaseInitializer {
 
     @Autowired
@@ -26,7 +26,7 @@ public class DemoDatabaseInitializerImpl implements DatabaseInitializer {
     WorkService workService;
 
     @Override
-    public void loadDemo() {
+    public void loadBootstrapData() {
 
         // create Person entity; not used in demo
         PersonDto personDto = new PersonDto();

@@ -15,6 +15,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ResourceLoaderAware;
+import org.springframework.core.io.PathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.io.UrlResource;
@@ -27,10 +28,8 @@ import translateit2.exception.TranslateIt2Exception;
 import translateit2.service.LoadingContractorImpl;
 
 @Component 
-public class FileLoaderImpl implements FileLoader, ResourceLoaderAware {
+public class FileLoaderImpl implements FileLoader {
     static final Logger logger = LogManager.getLogger(LoadingContractorImpl.class);
-
-    private ResourceLoader resourceLoader;
 
     private final Path uploadLocation;
 
@@ -49,7 +48,8 @@ public class FileLoaderImpl implements FileLoader, ResourceLoaderAware {
     public void deleteUploadedFile(final Path fileToDeletePath) {
         try {
             Files.deleteIfExists(fileToDeletePath);
-        } catch (IOException e) {
+        } catch (IOException e) { 
+        	// delete silently
             logger.warn("Could not remove file: {}", fileToDeletePath.toAbsolutePath().toString());
         }
     }
@@ -61,6 +61,7 @@ public class FileLoaderImpl implements FileLoader, ResourceLoaderAware {
 
     @Override
     public Path getUploadPath(final String filename) {
+    	
         if (Files.notExists(getFullPath(uploadLocation)))
             try {
                 Files.createDirectory(getFullPath(uploadLocation));
@@ -73,6 +74,7 @@ public class FileLoaderImpl implements FileLoader, ResourceLoaderAware {
 
     @Override
     public Path getDownloadPath(final String filename) {
+    	
     	Path downloadPath = getFullPath(downloadLocation);
         if (Files.notExists(getFullPath(downloadPath)))
             try {
@@ -102,7 +104,8 @@ public class FileLoaderImpl implements FileLoader, ResourceLoaderAware {
                 Files.move(temporaryFilePath, downloadFilePath,StandardCopyOption.REPLACE_EXISTING );
                 return Files.walk(downloadFilePath);
             } catch (IOException e) {
-                throw new TranslateIt2Exception(e.getCause());
+                throw new TranslateIt2Exception(TranslateIt2ErrorCode.FILE_NOT_FOUND,
+                		e.getCause());
             }        
         else
             throw new TranslateIt2Exception(TranslateIt2ErrorCode.FILE_NOT_FOUND);
@@ -114,53 +117,35 @@ public class FileLoaderImpl implements FileLoader, ResourceLoaderAware {
             return Files.walk(this.downloadLocation, 1).filter(path -> !path.equals(this.downloadLocation))
                     .map(path -> this.downloadLocation.relativize(path));
         } catch (IOException e) {
-            throw new TranslateIt2Exception(e.getCause());
+            throw new TranslateIt2Exception(TranslateIt2ErrorCode.FILE_NOT_FOUND,
+            		e.getCause());
         }
     }
 
     @Override
     public Resource loadAsResource(final String filename) {
-        try {
-            Path file = getUploadPath(filename);
-            Resource resource = new UrlResource(file.toUri());
+        Path file = getUploadPath(filename);
+		Resource resource = new PathResource(file); 
 
-            // TODO: test alternatives
-            // like applicationContext.getResource(filename);
-            // or like Resource resource2 = resourceLoader.getResource(filename);
-
-            if (resource.exists() || resource.isReadable()) {
-                return resource;
-            } else {
-                throw new TranslateIt2Exception(TranslateIt2ErrorCode.FILE_NOT_FOUND);
-            }
-
-        } catch (MalformedURLException e) {
-            //throw new LoadedFileNotFoundException(filename, e.getCause());
-            throw new TranslateIt2Exception(TranslateIt2ErrorCode.FILE_NOT_FOUND, e.getCause());
-        }        
+		if (resource.exists() || resource.isReadable()) {
+		    return resource;
+		} else {
+		    throw new TranslateIt2Exception(TranslateIt2ErrorCode.FILE_NOT_FOUND);
+		}        
     }
 
     @Override
     public Resource downloadAsResource(final String filename) {
-        try {
-            Path file = getDownloadPath(filename);
-            Resource resource = new UrlResource(file.toUri());
+        Path file = getDownloadPath(filename);
+		Resource resource = new PathResource(file); // UrlResource(file.toUri());
 
-            if (resource.exists() || resource.isReadable()) {
-                return resource;
-            } else {
-                throw new TranslateIt2Exception(TranslateIt2ErrorCode.FILE_NOT_FOUND);
-            }
-
-        } catch (MalformedURLException e) {
-            throw new TranslateIt2Exception(TranslateIt2ErrorCode.FILE_NOT_FOUND, e.getCause());
-        }        
+		if (resource.exists() || resource.isReadable()) {
+		    return resource;
+		} else {
+		    throw new TranslateIt2Exception(TranslateIt2ErrorCode.FILE_NOT_FOUND);
+		}        
     }
-    
-    @Override
-    public void setResourceLoader(ResourceLoader resourceLoader) {
-        this.resourceLoader = resourceLoader;
-    }
+  
 
     @Override
     public Path storeToUploadDirectory(final MultipartFile file) {

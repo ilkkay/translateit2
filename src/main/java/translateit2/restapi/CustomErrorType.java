@@ -7,33 +7,24 @@ import translateit2.exception.TranslateIt2ErrorCode;
 
 public class CustomErrorType {
 
-    List<String> errorMessages;
+    final private String localizedErrorMessage;
 
-    private String localizedErrorMessage;
+    final List<String> errorMessages;
 
-    private TranslateIt2ErrorCode errorCode;
-    
-    public CustomErrorType(String errorMessage) {
-        this.errorMessages = Arrays.asList(errorMessage);
-        this.errorCode = TranslateIt2ErrorCode.UNDEFINED_ERROR;
-    }
-    
+    final private TranslateIt2ErrorCode errorCode;
+
     public CustomErrorType(String localizedErrorMessage, List<String> errorMessages) {
         this.localizedErrorMessage = localizedErrorMessage;
         this.errorMessages = errorMessages;
         this.errorCode = TranslateIt2ErrorCode.UNDEFINED_ERROR;
     }
-   
+ 
     public CustomErrorType(String errorMessage, TranslateIt2ErrorCode errorCode) {
+        this.localizedErrorMessage = errorMessage;
         this.errorMessages = Arrays.asList(errorMessage);
         this.errorCode = errorCode;
     }
     
-    public CustomErrorType(List<String> errorMessages, TranslateIt2ErrorCode errorCode) {
-        this.errorMessages = errorMessages;
-        this.errorCode = errorCode;
-    }
-
     public CustomErrorType(String localizedErrorMessage, String errorMessage, TranslateIt2ErrorCode errorCode) {
         this.localizedErrorMessage = localizedErrorMessage;
         this.errorMessages = Arrays.asList(errorMessage);

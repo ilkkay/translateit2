@@ -23,7 +23,7 @@ public class LocaleResolverConfig {
         this.locale = locale;
     }
     
-    // should detect language based on browser. TODO: test it
+    // should detect language based on browser. 
     // Does not support setLocale, since the accept header can
     // only be changed through changing the client's locale settings
     // => AcceptHeaderLocaleResolver will resolve the Locale from
