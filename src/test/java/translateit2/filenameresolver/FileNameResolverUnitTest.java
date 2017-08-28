@@ -14,7 +14,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import translateit2.exception.TranslateIt2Exception;
 
 @RunWith(MockitoJUnitRunner.class)
-public class FileNameResolverUnitTests {
+public class FileNameResolverUnitTest {
 
     @Test
     public void resolveFileName_assertAppName() {

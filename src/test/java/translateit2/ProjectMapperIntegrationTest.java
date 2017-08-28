@@ -1,4 +1,4 @@
-package translateit2.persistence;
+package translateit2;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -29,7 +29,7 @@ import translateit2.persistence.model.Unit;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = TranslateIt2v4Application.class)
 @WebAppConfiguration
-public class ProjectMapperTest {
+public class ProjectMapperIntegrationTest {
     @Autowired
     private ProjectMapper modelMapper;
 

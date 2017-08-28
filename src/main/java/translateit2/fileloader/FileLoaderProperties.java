@@ -10,14 +10,6 @@ public class FileLoaderProperties {
     private String permanentLocation; 
     private String rootPermanentDirectory;
     private String rootTemporaryDirectory;
-
-/* 
-translateit2.fileloader.rootPermanentDirectory=D:\\sw-tools\\STS\\TranslateIT2v4
-translateit2.fileloader.rootTemporaryDirectory=D:\\sw-tools\\STS\\TranslateIT2v4
-translateit2.fileloader.uploadLocation=upload-dir
-translateit2.fileloader.downloadLocation=download-dir
-translateit2.fileloader.permanentLocation=permanent-dir
-*/
     
     public String getUploadLocation() {
         return uploadLocation;

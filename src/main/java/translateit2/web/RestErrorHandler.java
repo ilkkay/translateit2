@@ -23,14 +23,14 @@ import translateit2.exception.TranslateIt2ErrorCode;
 import translateit2.exception.TranslateIt2Exception;
 import translateit2.exception.TranslateIt2ServiceException;
 import translateit2.restapi.CustomErrorType;
-import translateit2.util.Messages;
+import translateit2.util.MessageLogic;
 
 @RestControllerAdvice
 @ConfigurationProperties(prefix = "translateit2.validator")
 public class RestErrorHandler {
 
     @Autowired
-    Messages messages;
+    MessageLogic messages;
 
     // Constraint violation exceptions
     @ExceptionHandler(MethodArgumentNotValidException.class)

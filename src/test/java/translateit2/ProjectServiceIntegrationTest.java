@@ -51,7 +51,7 @@ import translateit2.persistence.model.Status;
 import translateit2.persistence.model.Target;
 import translateit2.service.ProjectService;
 import translateit2.service.WorkService;
-import translateit2.util.Messages;
+import translateit2.util.MessageLogic;
 
 @ConfigurationProperties(prefix = "test.translateit2")
 @TestPropertySource("test.properties")

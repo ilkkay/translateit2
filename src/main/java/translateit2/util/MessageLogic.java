@@ -21,7 +21,7 @@ import org.springframework.stereotype.Component;
  */
 @ConfigurationProperties(prefix = "translateit2.localeresolver")
 @Component
-public class Messages {
+public class MessageLogic {
 
     private String locale;
 
@@ -44,7 +44,7 @@ public class Messages {
     }
 
     @Autowired
-    public Messages(MessageSource messageSource) {
+    public MessageLogic(MessageSource messageSource) {
         this.messageSource = messageSource;
     }
 

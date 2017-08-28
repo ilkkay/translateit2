@@ -42,28 +42,27 @@ public class RestWorkControllerTest {
     @Test //@RequestMapping(value = "/work/{id}/sourceFile", method = RequestMethod.POST)
     public void shouldUploadFile() {
 
-        ResponseEntity<?> response = null;
-       
         // WHEN loading empty file
-        String testFile = "empty-testupload.txt";
+        String testFile = "src/test/data/empty-testupload.txt";
         ClassPathResource resource = new ClassPathResource(testFile, getClass());
         MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
         map.add("id", new Long(1));
-        //map.add("file", resource);
+        map.add("file", resource);
+        String responseBody;
         try {
-            //ResponseEntity<?> response = this.restTemplate.postForEntity("/work/{id}/sourceFile", map, String.class);
-            response = this.restTemplate.getForEntity("/work/1", WorkDto.class, map);
+        	ResponseEntity<?> response = this.restTemplate.postForEntity("/work/{id}/sourceFile", map, String.class);
+            //response = this.restTemplate.getForEntity("/work/1", WorkDto.class, map);
+            responseBody = response.getBody().toString();
         } catch (Exception e) {
             fail("Unexpected exception ");
         } 
         
-        // THEN 
-       String responseBody = response.getBody().toString();
+        // THEN        
        
        return;
     }
     
-    //@Test
+    @Test
     public void test() throws Exception {
 
         MvcResult result = this.mvc.perform(MockMvcRequestBuilders

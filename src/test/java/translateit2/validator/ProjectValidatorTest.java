@@ -34,7 +34,7 @@ import translateit2.languagefile.LanguageFileType;
 import translateit2.persistence.dao.ProjectRepository;
 import translateit2.persistence.dto.ProjectDto;
 import translateit2.persistence.model.Project;
-import translateit2.util.Messages;
+import translateit2.util.MessageLogic;
 
 // JUnit 4 Rule to run individual tests with a different default locale
 // https://gist.github.com/digulla/5884162
@@ -46,7 +46,7 @@ public class ProjectValidatorTest implements ConstraintValidatorFactory {
 
     private Integer testProjectNameMaxSize = 35;
 
-    private Messages messages;
+    private MessageLogic messages;
 
     @Mock
     private ProjectRepository mockRepo;
@@ -61,14 +61,6 @@ public class ProjectValidatorTest implements ConstraintValidatorFactory {
         ValidatorFactory factory = config.buildValidatorFactory();
         validator = factory.getValidator();
 
-        // TODO: move this part to somewhere else
-        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-        messageSource.setBasename("classpath:messages");
-        messageSource.setDefaultEncoding("ISO-8859-1");
-        messageSource.setFallbackToSystemLocale(false);
-
-        messages = new Messages(messageSource);
-        messages.resetLocale(Locale.ENGLISH);
     }
 
     @Test
@@ -199,59 +191,6 @@ public class ProjectValidatorTest implements ConstraintValidatorFactory {
 
     @Override
     public void releaseInstance(ConstraintValidator<?, ?> arg0) {
-
-    }
-
-    @Test
-    public void test_messages() throws NoSuchFieldException, SecurityException {
-        String s = null;
-
-        s = messages.get("ProjectValidator.name_exists");
-        System.out.println(s);
-        ;
-
-        s = messages.get("ProjectValidator.no_create_permission");
-        System.out.println(s);
-        ;
-
-        s = messages.get("ProjectValidator.project_exists_already");
-        System.out.println(s);
-        ;
-
-        s = messages.get("ProjectValidator.entity_missing");
-        System.out.println(s);
-        ;
-
-        s = messages.get("ProjectValidator.name_exists");
-        System.out.println(s);
-        ;
-
-        s = messages.get("ProjectValidator.test_name");
-        System.out.println(s);
-        ;
-
-        String[] args = { "Translate IT 2", "5", "35" };
-        s = messages.get("ProjectDto.projectName.size", args);
-        System.out.println(s);
-        ;
-
-        s = messages.get("Source.segment_not_null");
-        System.out.println(s);
-        ;
-        s = messages.get("Target.segment_not_empty");
-        System.out.println(s);
-        String[] args2 = { "5", "666" };
-        s = messages.get("Unit.segment_size", args2);
-        System.out.println(s);
-
-        s = messages.get("javax.validation.constraints.NotNull.message");
-        System.out.println(s);
-
-        s = messages.get("org.hibernate.validator.constraints.NotBlank.message");
-        System.out.println(s);
-
-        s = messages.get("org.hibernate.validator.constraints.NotEmpty.message");
-        System.out.println(s);
 
     }
 

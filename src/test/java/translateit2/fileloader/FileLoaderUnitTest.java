@@ -26,13 +26,13 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-public class FileLoaderUnitTests {
+public class FileLoaderUnitTest {
 
     private String testUploadDir="upload-dir";
 
     private String testDownloadDir="download-dir";
     
-    private String testRootTemporaryDirectory ="D:\\sw-tools\\STS\\testRoot";
+    private String testRootTemporaryDirectory ="testRoot";
 
     @Before
     public void setUp() throws Exception {
@@ -58,8 +58,8 @@ public class FileLoaderUnitTests {
     public void storeMultipartFile_assertUploadedFile() throws IOException {
 
         // when MultipartFile exists
-        Path filePath = Paths.get("d:\\dotcms_fi-utf8.properties");
-        File file = new File("d:\\dotcms_fi-utf8.properties");
+        Path filePath = Paths.get("src/test/data/dotcms_fi-utf8.properties");
+        File file = new File("src/test/data/dotcms_fi-utf8.properties");
         FileInputStream input = new FileInputStream(file);
         MultipartFile multipartFile = new MockMultipartFile("file",
                 file.getName(), "text/plain", IOUtils.toByteArray(input));
@@ -139,10 +139,10 @@ public class FileLoaderUnitTests {
 
     @Test
     public void storeFileToDownloadDirectory_assertParentDirectoryy() {
-        Path tmpFilePath = Paths.get("d:\\dotcms_temp.properties");
+        Path tmpFilePath = Paths.get("src/test/data/dotcms_temp.properties");
 
         try {
-            Files.copy(Paths.get("d:\\dotcms_fi-utf8.properties"), tmpFilePath,StandardCopyOption.REPLACE_EXISTING );
+            Files.copy(Paths.get("src/test/data/dotcms_fi-utf8.properties"), tmpFilePath,StandardCopyOption.REPLACE_EXISTING );
         } catch (IOException e) {
             fail("Unexpected exception");
         }
@@ -167,7 +167,9 @@ public class FileLoaderUnitTests {
         FileLoaderProperties props = new FileLoaderProperties();
         props.setUploadLocation(testUploadDir);
         props.setDownloadLocation(testDownloadDir);
-        props.setRootTemporaryDirectory(testRootTemporaryDirectory);
+        
+        Path testDir = Paths.get("").toAbsolutePath().getParent().resolve(testRootTemporaryDirectory);
+        props.setRootTemporaryDirectory(testDir.toString());
         return new FileLoaderImpl(props); 
     }
 }

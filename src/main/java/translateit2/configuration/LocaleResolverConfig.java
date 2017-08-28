@@ -34,11 +34,11 @@ public class LocaleResolverConfig {
         return bean;
     }
     
-    @Bean
+    /*@Bean
     public CharSetResolver charSetResolver() {
         CharSetResolver bean = new CharSetResolver();
         return bean;
-    }
+    }*/
     
     @Bean
     public LocaleResolver localeResolver() {

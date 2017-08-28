@@ -24,7 +24,7 @@ public class LanguageFileValidatorUnitTest {
         LanguageFileType expectedType = LanguageFileType.ISO8859_1;
 
         // THEN no exceptions if the upload file is ISO8859-1
-        Path uploadedLngFile = Paths.get("d:\\messages_fi.properties");
+        Path uploadedLngFile = Paths.get("src/test/data/dotcms_fi.properties");
 
         assertThatCode(() -> validator().validateCharacterSet(uploadedLngFile,  
                 expectedType)).doesNotThrowAnyException();
@@ -38,7 +38,7 @@ public class LanguageFileValidatorUnitTest {
         LanguageFileType expectedType = LanguageFileType.UTF_8;
 
         // THEN no exceptions if the upload file is UTF-8
-        Path uploadedLngFile = Paths.get("d:\\dotcms_fi-UTF8.properties");
+        Path uploadedLngFile = Paths.get("src/test/data/dotcms_fi-utf8.properties");
 
         assertThatCode(() -> validator().validateCharacterSet(uploadedLngFile,  
                 expectedType)).doesNotThrowAnyException();
@@ -52,7 +52,7 @@ public class LanguageFileValidatorUnitTest {
         LanguageFileType expectedType = LanguageFileType.ISO8859_1;
 
         // THEN throw exception if the upload file is UTF-8
-        Path uploadedLngFile = Paths.get("d:\\messages_fi-UTF8.properties");
+        Path uploadedLngFile = Paths.get("src/test/data/dotcms_fi-utf8.properties");
 
         assertThatCode(() -> validator().validateCharacterSet(uploadedLngFile,  
                 expectedType))
@@ -66,7 +66,7 @@ public class LanguageFileValidatorUnitTest {
 
         // WHEN expect UTF-8 and uploaded is ISO8859
         LanguageFileType expectedType = LanguageFileType.UTF_8;
-        Path uploadedLngFile = Paths.get("D:\\dotcms_fi.properties");
+        Path uploadedLngFile = Paths.get("src/test/data/dotcms_fi.properties");
 
         // THEN throw exception if the upload file is ISO8859
         assertThatCode(() -> validator().validateCharacterSet(uploadedLngFile,  

@@ -29,11 +29,11 @@ import translateit2.filelocator.FileLocator;
 import translateit2.filelocator.FileLocatorImpl;
 import translateit2.languagefile.LanguageFileFormat;
 
-public class FileLocatorUnitTests {
+public class FileLocatorUnitTest {
     List<Path> newLocation = new ArrayList<Path>();
 
     private String testPermanentDir = "permanentDir"; 
-    private String testRootPermanentDir ="D:\\sw-tools\\STS\\testRoot"; 
+    private String testRootPermanentDir ="testRoot"; 
 
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {
@@ -86,8 +86,8 @@ public class FileLocatorUnitTests {
                 fail ("Could not copy test directory.");
             }
 
-        Path srcFilePath = Paths.get("D:\\messages_fi.properties");
-        Path permanentFilePath = permanentPath.resolve("messages_fi.properties");        
+        Path srcFilePath = Paths.get("src/test/data/dotcms_fi-utf8.properties");
+        Path permanentFilePath = permanentPath.resolve("dotcms_fi-utf8.properties");        
         try {
             Files.copy(srcFilePath, permanentFilePath, StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
@@ -154,7 +154,10 @@ public class FileLocatorUnitTests {
         FileLoaderProperties props = new FileLoaderProperties();
         props.setPermanentLocation(testPermanentDir);
         props.setRootPermanentDirectory(testRootPermanentDir);
-
+        
+        Path testDir = Paths.get("").toAbsolutePath().getParent().resolve(testRootPermanentDir);        
+        props.setRootPermanentDirectory(testDir.toString());
+        
         return new FileLocatorImpl(props); 
     }
 }
