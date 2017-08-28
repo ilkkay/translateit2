@@ -22,6 +22,8 @@ public interface FileLoader {
 
     Resource loadAsResource(final String filename);
     
+    Resource downloadAsResource(final String filename);
+    
     Path storeToUploadDirectory(final MultipartFile file);
 
     Stream <Path> storeToDownloadDirectory(final Path temporaryFilePath, 

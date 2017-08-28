@@ -141,6 +141,23 @@ public class FileLoaderImpl implements FileLoader, ResourceLoaderAware {
     }
 
     @Override
+    public Resource downloadAsResource(final String filename) {
+        try {
+            Path file = getDownloadPath(filename);
+            Resource resource = new UrlResource(file.toUri());
+
+            if (resource.exists() || resource.isReadable()) {
+                return resource;
+            } else {
+                throw new TranslateIt2Exception(TranslateIt2ErrorCode.FILE_NOT_FOUND);
+            }
+
+        } catch (MalformedURLException e) {
+            throw new TranslateIt2Exception(TranslateIt2ErrorCode.FILE_NOT_FOUND, e.getCause());
+        }        
+    }
+    
+    @Override
     public void setResourceLoader(ResourceLoader resourceLoader) {
         this.resourceLoader = resourceLoader;
     }

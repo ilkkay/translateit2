@@ -111,7 +111,7 @@ public class RestUnitController {
         logger.info("Downloading file {}", filename);
         
         try {
-            Resource file = fileLoader.loadAsResource(filename);
+            Resource file = fileLoader.downloadAsResource(filename);
             return ResponseEntity.ok()
                     .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
                     .body(file);
