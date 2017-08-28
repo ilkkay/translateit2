@@ -6,8 +6,6 @@ import java.util.stream.Stream;
 import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
-import translateit2.exception.TranslateIt2Exception;
-
 public interface FileLoader {
 
     void deleteUploadedFile(final Path filePath);

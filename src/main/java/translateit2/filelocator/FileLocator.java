@@ -4,7 +4,6 @@ import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.util.List;
 
-import translateit2.exception.TranslateIt2Exception;
 import translateit2.languagefile.LanguageFileFormat;
 
 public interface FileLocator {

@@ -20,7 +20,6 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
 import translateit2.TranslateIt2v4Application;
-import translateit2.persistence.dto.WorkDto;
 
 
 @RunWith(SpringRunner.class)

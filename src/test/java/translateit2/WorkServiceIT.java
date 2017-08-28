@@ -2,7 +2,6 @@ package translateit2;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
@@ -15,8 +14,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
@@ -32,7 +29,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.mapping.PropertyPath;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -42,16 +38,11 @@ import translateit2.languagefile.LanguageFileType;
 import translateit2.persistence.dto.PersonDto;
 import translateit2.persistence.dto.ProjectDto;
 import translateit2.persistence.dto.TranslatorGroupDto;
-import translateit2.persistence.dto.UnitDto;
 import translateit2.persistence.dto.WorkDto;
 import translateit2.persistence.model.Priority;
-import translateit2.persistence.model.Project;
-import translateit2.persistence.model.Source;
 import translateit2.persistence.model.Status;
-import translateit2.persistence.model.Target;
 import translateit2.service.ProjectService;
 import translateit2.service.WorkService;
-import translateit2.util.MessageLogic;
 
 @ConfigurationProperties(prefix = "test.translateit2")
 @TestPropertySource("test.properties")

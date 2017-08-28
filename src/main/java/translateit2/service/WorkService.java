@@ -6,7 +6,6 @@ import javax.validation.Valid;
 
 import org.springframework.validation.annotation.Validated;
 
-import translateit2.exception.TranslateIt2Exception;
 import translateit2.persistence.dto.UnitDto;
 import translateit2.persistence.dto.WorkDto;
 

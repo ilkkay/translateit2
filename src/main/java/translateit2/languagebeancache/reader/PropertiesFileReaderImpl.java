@@ -17,7 +17,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 
-import translateit2.LoadingContractorIT;
 import translateit2.exception.TranslateIt2ErrorCode;
 import translateit2.exception.TranslateIt2Exception;
 import translateit2.languagefile.LanguageFileFormat;

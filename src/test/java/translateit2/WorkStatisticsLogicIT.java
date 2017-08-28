@@ -1,25 +1,15 @@
 package translateit2;
 
-import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
-import javax.validation.ConstraintViolationException;
-import javax.validation.Path;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.hamcrest.collection.IsIterableContainingInOrder;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -30,7 +20,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import translateit2.exception.TranslateIt2Exception;
 import translateit2.languagefile.LanguageFileFormat;
 import translateit2.languagefile.LanguageFileType;
 import translateit2.persistence.dto.PersonDto;

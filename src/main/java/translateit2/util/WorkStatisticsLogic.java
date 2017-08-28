@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import translateit2.persistence.dao.UnitRepository;
-import translateit2.persistence.dao.WorkRepository;
 import translateit2.persistence.model.State;
 import translateit2.restapi.ViewStatistics;
 

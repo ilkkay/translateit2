@@ -13,7 +13,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import translateit2.TranslateIt2v4Application;
 import translateit2.languagebeancache.LanguageBeanCache;
 import translateit2.languagebeancache.reader.LanguageFileReader;
 import translateit2.languagebeancache.validator.LanguageFileValidator;

@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 
 import translateit2.exception.TranslateIt2ErrorCode;
 import translateit2.exception.TranslateIt2Exception;
-import translateit2.languagebeancache.reader.PropertiesFileReaderImpl;
 import translateit2.languagefile.LanguageFileFormat;
 
 @Component
