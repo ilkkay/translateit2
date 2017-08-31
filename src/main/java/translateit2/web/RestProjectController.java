@@ -31,21 +31,23 @@ public class RestProjectController {
     private LanguageServicesConfig languageServices;
 
     // -------------------Create a new Project 
+    // not in Angularjs
     // ------------------------------------------
-    @RequestMapping(value = "/project/", method = RequestMethod.POST)
-    public ResponseEntity<?> createProject(@RequestBody ProjectDto project, UriComponentsBuilder ucBuilder) {
+    @RequestMapping(value = "/projects/{id}", method = RequestMethod.POST)
+    public ResponseEntity<?> createProject(@PathVariable("id") long id, 
+    		@RequestBody ProjectDto project, UriComponentsBuilder ucBuilder) {
         logger.info("Creating Project : {}", project);
 
         ProjectDto prj = projectService.createProjectDto(project,"Ilkka");
 
         HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(ucBuilder.path("/api/project/{id}").buildAndExpand(prj.getId()).toUri());
+        headers.setLocation(ucBuilder.path("/api/projects/{id}").buildAndExpand(prj.getId()).toUri());
         return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
     }
 
     // ------------------- Delete a Project
     // ----------------------------------------
-    @RequestMapping(value = "/project/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/projects/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteProject(@PathVariable("id") long id) {
         logger.info("Fetching & Deleting Project with id {}", id);
 
@@ -57,7 +59,7 @@ public class RestProjectController {
     // -------------------Get a Project => 
     // TODO: /projects/1/
     // -------------------------------------------
-    @RequestMapping(value = "/project/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/projects/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getProject(@PathVariable("id") long id) {
         logger.info("Fetching Project with id {}", id);
 
@@ -69,9 +71,10 @@ public class RestProjectController {
     // -------------------Retrieve All Projects => 
     // TODO: => /projects/ correct all if you correct this one !!!
     // ---------------------------------------------
-    @RequestMapping(value = "/project/", method = RequestMethod.GET)
+    @RequestMapping(value = "/projects", method = RequestMethod.GET)
     public ResponseEntity<?> getAllProjects(UriComponentsBuilder ucBuilder) {
         logger.info("Gettting all projects for cuurent user");
+        
         
         ViewProjects viewPrjs = new ViewProjects();
 
@@ -80,12 +83,13 @@ public class RestProjectController {
         viewPrjs.setSupportedFormats(languageServices.getSupportedFormats());
         viewPrjs.setSupportedCharacterSets(languageServices.getSupportedCharacterSets());
 
-        return new ResponseEntity<>(viewPrjs, HttpStatus.OK);
+        return new ResponseEntity<>(viewPrjs, HttpStatus.OK);        
+
     }
 
     // ------------------- Update a Project
     // ------------------------------------------------
-    @RequestMapping(value = "/project/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/projects/{id}", method = RequestMethod.PUT)
     public ResponseEntity<?> updateProject(@PathVariable("id") long id, @RequestBody ProjectDto project) {
         logger.info("Updating Project with id {}", project.getId());
         

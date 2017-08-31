@@ -23,7 +23,7 @@
     <Loggers>
         <Logger name="translateit2v4" level="debug"/>
         
-        <Logger name="org.springframework" level="info"/>
+        <Logger name="org.springframework" level="debug"/>
         
         <Logger name="org.hibernate" level="info"/>
 
