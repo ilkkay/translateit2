@@ -33,8 +33,8 @@ public class RestProjectController {
     // -------------------Create a new Project 
     // not in Angularjs
     // ------------------------------------------
-    @RequestMapping(value = "/projects/{id}", method = RequestMethod.POST)
-    public ResponseEntity<?> createProject(@PathVariable("id") long id, 
+    @RequestMapping(value = "/projects", method = RequestMethod.POST)
+    public ResponseEntity<?> createProject( 
     		@RequestBody ProjectDto project, UriComponentsBuilder ucBuilder) {
         logger.info("Creating Project : {}", project);
 
