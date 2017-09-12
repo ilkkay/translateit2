@@ -1,17 +1,15 @@
 package translateit2;
 
-import java.util.Arrays;
-
-import javax.annotation.PostConstruct;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-
 import translateit2.configuration.DatabaseInitializer;
 import translateit2.fileloader.FileLoaderProperties;
+
+import javax.annotation.PostConstruct;
+import java.util.Arrays;
 
 @SpringBootApplication
 @EnableConfigurationProperties(FileLoaderProperties.class)
@@ -22,6 +20,7 @@ public class TranslateIt2v4Application {
     public static void main(String[] args) {
        
         String newArgs[] = Arrays.copyOf(args, args.length + additionalArgs.length);
+        // note [MD] (1) System.arraycopy
         for (int i = 0 ; i < additionalArgs.length ; i++) newArgs[args.length + i] = additionalArgs[i];
 
         SpringApplication.run(TranslateIt2v4Application.class, newArgs);

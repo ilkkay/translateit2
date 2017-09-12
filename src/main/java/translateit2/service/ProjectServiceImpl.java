@@ -1,17 +1,5 @@
 package translateit2.service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
-import javax.transaction.Transactional;
-import javax.validation.Valid;
-
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,29 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.validation.annotation.Validated;
-
 import translateit2.exception.TranslateIt2ErrorCode;
 import translateit2.exception.TranslateIt2Exception;
-import translateit2.persistence.dao.FileInfoRepository;
-import translateit2.persistence.dao.InfoRepository;
-import translateit2.persistence.dao.PersonRepository;
-import translateit2.persistence.dao.ProjectRepository;
-import translateit2.persistence.dao.TranslatorGroupRepository;
-import translateit2.persistence.dao.UnitRepository;
-import translateit2.persistence.dao.WorkRepository;
-import translateit2.persistence.dto.FileInfoDto;
-import translateit2.persistence.dto.InfoDto;
-import translateit2.persistence.dto.PersonDto;
-import translateit2.persistence.dto.ProjectDto;
-import translateit2.persistence.dto.ProjectMapper;
-import translateit2.persistence.dto.TranslatorGroupDto;
-import translateit2.persistence.model.FileInfo;
-import translateit2.persistence.model.Info;
-import translateit2.persistence.model.Person;
-import translateit2.persistence.model.Project;
-import translateit2.persistence.model.TranslatorGroup;
-import translateit2.persistence.model.Unit;
-import translateit2.persistence.model.Work;
+import translateit2.persistence.dao.*;
+import translateit2.persistence.dto.*;
+import translateit2.persistence.model.*;
+
+import javax.transaction.Transactional;
+import javax.validation.Valid;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Validated
 @EnableTransactionManagement
@@ -112,6 +87,7 @@ public class ProjectServiceImpl implements ProjectService {
         return groupDto;
     }
 
+    // note [MD] missing @Transactional annotations
     @Override
     public TranslatorGroupDto getGroupDtoByName(String name) {
         logger.log(getLoggerLevel(), "Entering getGroupDtoByName with {}", name.toString());

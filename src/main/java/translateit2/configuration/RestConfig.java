@@ -16,6 +16,7 @@ import org.springframework.web.filter.CorsFilter;
 
 @Configuration
 public class RestConfig {
+    // note [MD] (1) at face value this looks like allowing anything?
     @Bean
     public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

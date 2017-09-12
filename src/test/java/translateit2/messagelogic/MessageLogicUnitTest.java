@@ -1,13 +1,12 @@
 package translateit2.messagelogic;
 
-import java.util.Locale;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.MockitoAnnotations;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
-
 import translateit2.util.MessageLogic;
+
+import java.util.Locale;
 
 public class MessageLogicUnitTest {
 
@@ -55,6 +54,7 @@ public class MessageLogicUnitTest {
     	assert("ei voi olla null".equals(retrievedMsg));
 
     	retrievedMsg = messages.get("org.hibernate.validator.constraints.NotBlank.message");
+        // note [MD] uses JVM-assertion, probably not what was intended
         assert("ei voi olla tyhjä".equals(retrievedMsg));
 
 

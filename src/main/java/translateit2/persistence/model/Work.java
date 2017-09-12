@@ -1,24 +1,16 @@
 package translateit2.persistence.model;
 
-import java.io.Serializable;
-import java.time.LocalDate;
-import java.util.Locale;
-
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
-
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.Locale;
 
 //
 // property testing
@@ -38,6 +30,7 @@ public class Work implements Serializable {
 
     @NotNull
     @Size (min = 1, max = 10)
+    // note [MD] regexp seems odd
     @Pattern(regexp=".*[[0-9][\\.]]")
     private String version;
     
@@ -107,6 +100,7 @@ public class Work implements Serializable {
         return priority;
     }
 
+    // note [MD] double?
     public double getProgress() {
         return progress;
     }

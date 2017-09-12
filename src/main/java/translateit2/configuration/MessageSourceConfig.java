@@ -8,6 +8,7 @@ import org.springframework.context.support.ReloadableResourceBundleMessageSource
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.validation.beanvalidation.MethodValidationPostProcessor;
 
+// note [MD] (1) mixing on @Configuration and @ConfigurationProperties
 @ConfigurationProperties(prefix = "translateit2.messages")
 @Configuration
 public class MessageSourceConfig {
@@ -25,7 +26,8 @@ public class MessageSourceConfig {
         bean.setFallbackToSystemLocale(false);
         return bean;
     }
-    
+
+    // note [MD] (1) logically not part of message source configuration
     @Bean
     public MethodValidationPostProcessor methodValidationPostProcessor() {
         MethodValidationPostProcessor processor = new MethodValidationPostProcessor();
@@ -41,6 +43,7 @@ public class MessageSourceConfig {
         this.propertiesFile = propertiesFile;
     }
 
+    // note [MD] (1) logically not part of message source configuration
     @Bean
     public LocalValidatorFactoryBean validator() {
         LocalValidatorFactoryBean bean = new LocalValidatorFactoryBean();

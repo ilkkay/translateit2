@@ -1,11 +1,7 @@
 package translateit2.configuration;
 
-import java.time.LocalDate;
-import java.util.Locale;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import translateit2.languagefile.LanguageFileFormat;
 import translateit2.languagefile.LanguageFileType;
 import translateit2.persistence.dto.PersonDto;
@@ -16,6 +12,10 @@ import translateit2.persistence.model.Priority;
 import translateit2.service.ProjectService;
 import translateit2.service.WorkService;
 
+import java.time.LocalDate;
+import java.util.Locale;
+
+// note [MD] (1) a bean named "dev"
 @Component (value="dev")
 public class DemoDatabaseInitializerImpl implements DatabaseInitializer {
 

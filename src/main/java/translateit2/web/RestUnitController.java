@@ -1,11 +1,5 @@
 package translateit2.web;
 
-import java.nio.file.Path;
-import java.util.Map;
-import java.util.stream.Stream;
-
-import javax.servlet.http.HttpServletRequest;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,17 +7,10 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
-
 import translateit2.exception.TranslateIt2Exception;
 import translateit2.fileloader.FileLoader;
 import translateit2.persistence.dto.UnitDto;
@@ -32,6 +19,11 @@ import translateit2.restapi.ViewUnits;
 import translateit2.service.LoadingContractor;
 import translateit2.service.WorkService;
 import translateit2.util.WorkStatisticsLogic;
+
+import javax.servlet.http.HttpServletRequest;
+import java.nio.file.Path;
+import java.util.Map;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/api")

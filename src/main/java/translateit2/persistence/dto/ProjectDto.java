@@ -1,17 +1,15 @@
 package translateit2.persistence.dto;
 
-import java.util.Locale;
-
-import javax.validation.constraints.NotNull;
-
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-
 import translateit2.languagefile.LanguageFileFormat;
 import translateit2.languagefile.LanguageFileType;
 import translateit2.validator.ProjectConstraint;
+
+import javax.validation.constraints.NotNull;
+import java.util.Locale;
 
 @ProjectConstraint
 @ConfigurationProperties(prefix = "test")
@@ -105,6 +103,7 @@ public class ProjectDto {
      */
     @Override
     public boolean equals(Object obj) {
+        // note [MD] == false
         if (obj instanceof ProjectDto == false) {
             return false;
         }
@@ -113,6 +112,7 @@ public class ProjectDto {
         }
         final ProjectDto otherObject = (ProjectDto) obj;
 
+        // note [MD] formatting
         return new EqualsBuilder().append(this.id, otherObject.id).append(this.personId, otherObject.personId)
                 .append(this.name, otherObject.name)
                 .append(this.format, otherObject.format).append(this.charset, otherObject.charset)

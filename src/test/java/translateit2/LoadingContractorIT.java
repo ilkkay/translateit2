@@ -1,23 +1,5 @@
 package translateit2;
 
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -33,7 +15,6 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
-
 import translateit2.exception.TranslateIt2Exception;
 import translateit2.fileloader.FileLoader;
 import translateit2.languagefile.LanguageFileFormat;
@@ -44,14 +25,30 @@ import translateit2.persistence.dto.PersonDto;
 import translateit2.persistence.dto.ProjectDto;
 import translateit2.persistence.dto.TranslatorGroupDto;
 import translateit2.persistence.dto.WorkDto;
-import translateit2.persistence.model.FileInfo;
-import translateit2.persistence.model.Priority;
-import translateit2.persistence.model.State;
-import translateit2.persistence.model.Status;
-import translateit2.persistence.model.Unit;
+import translateit2.persistence.model.*;
 import translateit2.service.LoadingContractor;
 import translateit2.service.ProjectService;
-import translateit2.service.WorkService;;
+import translateit2.service.WorkService;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
+
+;
 
 @ConfigurationProperties(prefix = "test.translateit2")
 @TestPropertySource("test.properties")
@@ -360,6 +357,7 @@ public class LoadingContractorIT {
         .doesNotThrowAnyException(); 
 
         // assert that entity exists more
+        // note [MD] (1) assertFalse
         assertThat(fileInfoRepo.findByWorkId(workId).isPresent(),equalTo(false));
 
         // and neither does file

@@ -1,26 +1,11 @@
 package translateit2.service;
 
-import java.nio.charset.Charset;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import javax.transaction.Transactional;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.multipart.MultipartFile;
-
 import translateit2.configuration.CharSetResolver;
 import translateit2.exception.TranslateIt2ErrorCode;
 import translateit2.exception.TranslateIt2Exception;
@@ -37,15 +22,17 @@ import translateit2.persistence.dao.FileInfoRepository;
 import translateit2.persistence.dao.ProjectRepository;
 import translateit2.persistence.dao.UnitRepository;
 import translateit2.persistence.dao.WorkRepository;
-import translateit2.persistence.model.FileInfo;
-import translateit2.persistence.model.Project;
-import translateit2.persistence.model.Source;
-import translateit2.persistence.model.State;
-import translateit2.persistence.model.Status;
-import translateit2.persistence.model.Target;
-import translateit2.persistence.model.Unit;
-import translateit2.persistence.model.Work;
+import translateit2.persistence.model.*;
 
+import javax.transaction.Transactional;
+import java.nio.charset.Charset;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+// note [MD] @EnableTransactionManagement - why here?
 @EnableTransactionManagement
 @Service
 public class LoadingContractorImpl implements LoadingContractor {
@@ -252,8 +239,10 @@ public class LoadingContractorImpl implements LoadingContractor {
         return true;
     }
 
+    // note [MD] suspicious @Transactional private methods
     @Transactional
-    private void removeUnitDtos(final long workId) {        
+    private void removeUnitDtos(final long workId) {
+        // note [MD] pretty un-SQLish way to do this
         List<Unit> units = unitRepo.findAll().stream().filter(unit -> workId == unit.getWork().getId())
                 .collect(Collectors.toList());
         unitRepo.delete(units);        
@@ -261,6 +250,7 @@ public class LoadingContractorImpl implements LoadingContractor {
 
     @Transactional
     private Locale getExpectedSourceLocale(final long workId) {
+        // note [MD] repeated find, unused variable (same repeats below)
         Project project = workRepo.findOne(workId).getProject();
         return workRepo.findOne(workId).getProject().getSourceLocale();
     }
@@ -291,6 +281,7 @@ public class LoadingContractorImpl implements LoadingContractor {
     
     @Transactional
     private Map<String, String> getSegmentsMap(final long workId) {
+        // note [MD] using a toMap collector here would be a more streamish way to do the whole thing here
         List<Unit> units = unitRepo.findAll().stream().filter(unit -> workId == unit.getWork().getId())
                 .collect(Collectors.toList());
         Map<String, String> map = new HashMap<String, String>();

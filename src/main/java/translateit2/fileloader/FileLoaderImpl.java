@@ -1,15 +1,5 @@
 package translateit2.fileloader;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import java.util.stream.Stream;
-
-import javax.annotation.PostConstruct;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +8,18 @@ import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
-
 import translateit2.exception.TranslateIt2ErrorCode;
 import translateit2.exception.TranslateIt2Exception;
 import translateit2.service.LoadingContractorImpl;
+
+import javax.annotation.PostConstruct;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.stream.Stream;
 
 @Component 
 public class FileLoaderImpl implements FileLoader {
@@ -73,20 +71,23 @@ public class FileLoaderImpl implements FileLoader {
     	
     	Path downloadPath = getFullPath(downloadLocation);
         if (Files.notExists(getFullPath(downloadPath)))
+            // note [MD] (1) whole bock under a brace-less if (repeats below)
             try {
                 Files.createDirectory(downloadPath);
             } catch (IOException e) {
                 throw new TranslateIt2Exception(TranslateIt2ErrorCode.CANNOT_CREATE_DOWNLOAD_DIRECTORY);
             }
-        
+
         return getFullPath(downloadLocation).resolve(filename);
     }
 
+    // note [MD] (1) why return a stream from this method?
     @Override
     public Stream <Path> storeToDownloadDirectory(final Path temporaryFilePath,
     		final String downloadFilename) {
 
-        Path downloadFilePath = getDownloadPath(downloadFilename);   
+        // note [MD] (1) creating required directory structure in such case is usually handled with
+        Path downloadFilePath = getDownloadPath(downloadFilename);
         Path dir = downloadFilePath.getParent();
         if (Files.notExists(dir))
             try {
@@ -110,6 +111,7 @@ public class FileLoaderImpl implements FileLoader {
     @Override
     public Stream<Path> getPathsOfDownloadableFiles() { 
         try {
+            // note [MD] (1) Files.list ?
             return Files.walk(this.downloadLocation, 1).filter(path -> !path.equals(this.downloadLocation))
                     .map(path -> this.downloadLocation.relativize(path));
         } catch (IOException e) {
@@ -118,6 +120,7 @@ public class FileLoaderImpl implements FileLoader {
         }
     }
 
+    // note [MD] (1) confusing naming -> upload? ?
     @Override
     public Resource loadAsResource(final String filename) {
         Path file = getUploadPath(filename);
@@ -149,10 +152,12 @@ public class FileLoaderImpl implements FileLoader {
             throw new TranslateIt2Exception(TranslateIt2ErrorCode.FILE_TOBELOADED_IS_EMPTY);
 
         Path outFilePath;
-        try(InputStream in = file.getInputStream()) {    
+        // note [MD] (1) unused stream
+        try(InputStream in = file.getInputStream()) {
 
             outFilePath = getUploadPath(file.getOriginalFilename());
-            
+
+            // note [MD] (1) stream not closed
             Files.copy(file.getInputStream(), outFilePath, StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
             throw new TranslateIt2Exception(TranslateIt2ErrorCode.CANNOT_UPLOAD_FILE,e.getCause());

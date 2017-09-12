@@ -1,10 +1,12 @@
 package translateit2.fileloader;
 
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import org.apache.commons.io.IOUtils;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.util.FileSystemUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -18,13 +20,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.apache.commons.io.IOUtils;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.util.FileSystemUtils;
-import org.springframework.web.multipart.MultipartFile;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.*;
 
 public class FileLoaderUnitTest {
 
@@ -77,6 +75,7 @@ public class FileLoaderUnitTest {
             int expectedSize = (int) Files.size(filePath);
             assertTrue(Files.size(paths.get(0)) ==  expectedSize);
         } catch (IOException e) {
+            // note [MD] (1) why catch? Exception is lost.
             fail ("Could not read file sizes.");
         }
     }

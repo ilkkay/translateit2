@@ -1,16 +1,16 @@
 package translateit2.languagebeancache;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import translateit2.languagefile.LanguageFile;
+
+import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import javax.annotation.PostConstruct;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
-import translateit2.languagefile.LanguageFile;
+// note [MD] seems to duplicate code
 
 public class LanguageFileImpl <F, T extends LanguageFile <F>> 
     implements LanguageFileService <F, T> {

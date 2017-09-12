@@ -15,5 +15,7 @@ public enum Priority {
         return types[value];
     }
     */
+
+    // note [MD] unnatural order of values
     HIGH, LOW, MEDIUM;
 }

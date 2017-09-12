@@ -1,14 +1,9 @@
 package translateit2.configuration;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import translateit2.exception.TranslateIt2ErrorCode;
 import translateit2.exception.TranslateIt2Exception;
 import translateit2.languagebeancache.LanguageBeanCacheImpl;
@@ -19,10 +14,16 @@ import translateit2.languagefile.LanguageFileFormat;
 import translateit2.languagefile.LanguageFileType;
 import translateit2.persistence.model.Priority;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+// note [MD] (1) Component in configuration package
 @Component
 public class LanguageServicesConfig {
     static final Logger logger = LogManager.getLogger(LanguageServicesConfig.class);
 
+    // note [MD] (1) implementation binding?
     @Autowired
     private LanguageBeanCacheImpl<LanguageFileFormat, LanguageFileReader> fileReaderCache;
 
@@ -37,7 +38,8 @@ public class LanguageServicesConfig {
         List<LanguageFileFormat> writerFormats = fileWriterCache.listFormatsSupported();
         List<LanguageFileFormat> validatorFormats = fileValidatorCache.listFormatsSupported();
 
-        if (readerFormats.size() == writerFormats.size() && 
+        // note [MD] (1) shouldn't inconsistency result in some error instead?
+        if (readerFormats.size() == writerFormats.size() &&
                 readerFormats.size() == validatorFormats.size() &&
                 readerFormats.size() > 0)
             return readerFormats;

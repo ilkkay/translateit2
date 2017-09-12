@@ -10,6 +10,7 @@ package translateit2.persistence.model;
 	FINAL Indicates the terminating state.	
  */
 public enum State {
+    // note [MD] split by comment
     FINAL, NEEDS_REVIEW, NEEDS_TRANSLATION, /*
     NEW(0), TRANSLATED(1), NEEDS_REVIEW(2), NEEDS_TRANSLATION(3), SIGNED_OFF(4), FINAL(5);
     private int value;

@@ -1,15 +1,9 @@
 package translateit2.persistence.model;
 
-import java.io.Serializable;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-
 import org.apache.commons.lang3.builder.ToStringBuilder;
+
+import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity(name = "trFileInfo")
 @Table(name = "TR_file_info")
@@ -22,6 +16,7 @@ public class FileInfo implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    // note [MD] variable naming & property naming
     private String original_file;
 
     private String skeleton_file;

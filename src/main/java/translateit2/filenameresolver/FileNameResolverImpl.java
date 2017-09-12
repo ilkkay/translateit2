@@ -1,13 +1,12 @@
 package translateit2.filenameresolver;
 
-import java.util.Locale;
-import java.util.function.Predicate;
-
 import org.springframework.stereotype.Component;
-
 import translateit2.exception.TranslateIt2ErrorCode;
 import translateit2.exception.TranslateIt2Exception;
 import translateit2.languagefile.LanguageFileFormat;
+
+import java.util.Locale;
+import java.util.function.Predicate;
 
 @Component
 public class FileNameResolverImpl implements FileNameResolver{
@@ -24,6 +23,8 @@ public class FileNameResolverImpl implements FileNameResolver{
         } else
             return filename.substring(0, appIndex);
     }
+
+    // note [MD] case for regexp?
 
     /**
      * Get Locale from file name. Accepts following file naming conventions: 
