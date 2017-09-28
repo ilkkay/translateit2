@@ -24,7 +24,7 @@ public class FileNameResolverImpl implements FileNameResolver{
             return filename.substring(0, appIndex);
     }
 
-    // note [MD] case for regexp?
+    // note [MD] (2) case for regexp?
 
     /**
      * Get Locale from file name. Accepts following file naming conventions: 
