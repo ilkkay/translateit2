@@ -1,4 +1,4 @@
-package translateit2.languagebeancache.reader;
+package translateit2.formatfactory;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -19,11 +19,12 @@ import org.springframework.stereotype.Component;
 
 import translateit2.exception.TranslateIt2ErrorCode;
 import translateit2.exception.TranslateIt2Exception;
+import translateit2.languagebeancache.reader.PropertiesFileReaderImpl;
 import translateit2.languagefile.LanguageFileFormat;
 import translateit2.util.OrderedProperties;
 
 @Component
-public class PropertiesFileReaderImpl2 implements ILanguageFileReader {
+public class PropertiesFileReader implements ILanguageFileReader {
     static final Logger logger = LogManager.getLogger(PropertiesFileReaderImpl.class.getName());
 
     @Override

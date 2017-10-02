@@ -2,7 +2,6 @@ package translateit2;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
@@ -16,12 +15,12 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import translateit2.formatfactory.FormatFactory;
 import translateit2.formatfactory.FormatFactoryRegistry;
+import translateit2.formatfactory.ILanguageFileReader;
+import translateit2.formatfactory.ILanguageFileValidator;
+import translateit2.formatfactory.ILanguageFileWriter;
 import translateit2.languagebeancache.LanguageBeanCache;
-import translateit2.languagebeancache.reader.ILanguageFileReader;
 import translateit2.languagebeancache.reader.LanguageFileReader;
-import translateit2.languagebeancache.validator.ILanguageFileValidator;
 import translateit2.languagebeancache.validator.LanguageFileValidator;
-import translateit2.languagebeancache.writer.ILanguageFileWriter;
 import translateit2.languagebeancache.writer.LanguageFileWriter;
 import translateit2.languagefile.LanguageFileFormat;
 

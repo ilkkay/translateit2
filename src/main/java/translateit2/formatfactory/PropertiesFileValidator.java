@@ -1,4 +1,4 @@
-package translateit2.languagebeancache.validator;
+package translateit2.formatfactory;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -16,7 +16,7 @@ import translateit2.languagefile.LanguageFileFormat;
 import translateit2.languagefile.LanguageFileType;
 
 @Component
-public class PropertiesFileValidatorImpl2 implements ILanguageFileValidator {
+public class PropertiesFileValidator implements ILanguageFileValidator {
 
     @Override
     public void validateApplicationName(final String appName, final String expectedApplicationName) {

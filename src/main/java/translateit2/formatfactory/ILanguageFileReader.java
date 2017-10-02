@@ -1,12 +1,9 @@
-package translateit2.languagebeancache.reader;
+package translateit2.formatfactory;
 
 import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.List;
-
-import translateit2.languagefile.LanguageFile;
-import translateit2.languagefile.LanguageFileFormat;
 
 public interface ILanguageFileReader {   
     

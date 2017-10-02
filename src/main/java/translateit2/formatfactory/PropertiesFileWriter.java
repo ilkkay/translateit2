@@ -1,4 +1,4 @@
-package translateit2.languagebeancache.writer;
+package translateit2.formatfactory;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -13,10 +13,11 @@ import org.springframework.stereotype.Component;
 
 import translateit2.exception.TranslateIt2ErrorCode;
 import translateit2.exception.TranslateIt2Exception;
+import translateit2.languagebeancache.writer.PropertiesFileWriterImpl;
 import translateit2.languagefile.LanguageFileFormat;
 
 @Component
-public class PropertiesFileWriterImpl2 implements ILanguageFileWriter {
+public class PropertiesFileWriter implements ILanguageFileWriter {
     static final Logger logger = LogManager.getLogger(PropertiesFileWriterImpl.class.getName());
 
     @Override
