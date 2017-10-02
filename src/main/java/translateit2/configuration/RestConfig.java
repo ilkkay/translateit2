@@ -14,6 +14,7 @@ import org.springframework.web.filter.CorsFilter;
 
 // http://chariotsolutions.com/blog/post/angular-2-spring-boot-jwt-cors_part1/
 
+// https://docs.spring.io/spring/docs/current/spring-framework-reference/html/cors.html
 @Configuration
 public class RestConfig {
     @Bean

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import translateit2.configuration.LanguageServicesConfig;
@@ -33,16 +34,23 @@ public class RestProjectController {
     // -------------------Create a new Project 
     // not in Angularjs
     // ------------------------------------------
-    @RequestMapping(value = "/projects", method = RequestMethod.POST)
+    @RequestMapping(value = "/projects/", method = RequestMethod.POST)
     public ResponseEntity<?> createProject( 
     		@RequestBody ProjectDto project, UriComponentsBuilder ucBuilder) {
         logger.info("Creating Project : {}", project);
 
-        ProjectDto prj = projectService.createProjectDto(project,"Ilkka");
+        ProjectDto createdProject = projectService.createProjectDto(project,"Ilkka");
 
         HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(ucBuilder.path("/api/projects/{id}").buildAndExpand(prj.getId()).toUri());
-        return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+        headers.add("Content-Type", "application/json; charset=UTF-8");
+        headers.add("Location", ucBuilder.path("/api/projects/{id}")
+        		.buildAndExpand(createdProject.getId()).toUri().toString());
+        //headers.setLocation(ucBuilder.path("/api/projects/{id}")
+        //		.buildAndExpand(createdProject.getId()).toUri());
+        return new ResponseEntity<>(createdProject, headers, HttpStatus.CREATED);
+        //return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+
+        
     }
 
     // ------------------- Delete a Project
@@ -71,7 +79,7 @@ public class RestProjectController {
     // -------------------Retrieve All Projects => 
     // TODO: => /projects/ correct all if you correct this one !!!
     // ---------------------------------------------
-    @RequestMapping(value = "/projects", method = RequestMethod.GET)
+    @RequestMapping(value = "/projects/", method = RequestMethod.GET)
     public ResponseEntity<?> getAllProjects(UriComponentsBuilder ucBuilder) {
         logger.info("Gettting all projects for cuurent user");
         
