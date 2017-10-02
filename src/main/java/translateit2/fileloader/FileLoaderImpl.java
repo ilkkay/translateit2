@@ -98,7 +98,34 @@ public class FileLoaderImpl implements FileLoader {
         if (Files.exists(temporaryFilePath))
             try {                                
                 Files.move(temporaryFilePath, downloadFilePath,StandardCopyOption.REPLACE_EXISTING );
+                // return downloadFilePath;
                 return Files.walk(downloadFilePath);
+            } catch (IOException e) {
+                throw new TranslateIt2Exception(TranslateIt2ErrorCode.FILE_NOT_FOUND,
+                		e.getCause());
+            }        
+        else
+            throw new TranslateIt2Exception(TranslateIt2ErrorCode.FILE_NOT_FOUND);
+    }
+
+    @Override
+    public Path storeToDownloadDirectory2(final Path temporaryFilePath,
+    		final String downloadFilename) {
+
+        Path downloadFilePath = getDownloadPath(downloadFilename);   
+        Path dir = downloadFilePath.getParent();
+        if (Files.notExists(dir))
+            try {
+                Files.createDirectory(dir);
+            } catch (IOException e1) {
+                throw new TranslateIt2Exception(TranslateIt2ErrorCode.CANNOT_CREATE_PERMANENT_DIRECTORY);
+            }
+
+        if (Files.exists(temporaryFilePath))
+            try {                                
+                Files.move(temporaryFilePath, downloadFilePath,StandardCopyOption.REPLACE_EXISTING );
+                return downloadFilePath;
+                // return Files.walk(downloadFilePath);
             } catch (IOException e) {
                 throw new TranslateIt2Exception(TranslateIt2ErrorCode.FILE_NOT_FOUND,
                 		e.getCause());

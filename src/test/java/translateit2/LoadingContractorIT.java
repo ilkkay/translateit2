@@ -2,6 +2,7 @@ package translateit2;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
@@ -320,6 +321,60 @@ public class LoadingContractorIT {
         // and assert download directory name
         String expectedDownloadDir = fileloader.getDownloadPath("test.txt").getParent().getFileName().toString();
         String returnedDownloadDir = streamPaths.get(0).getParent().getFileName().toString();
+        assertThat(expectedDownloadDir,equalTo(returnedDownloadDir));
+
+        // remove file from disk and units from database
+        FileInfo info = fileInfoRepo.findByWorkId(workId).get();
+        fileInfoRepo.delete(info);
+        FileSystemUtils.deleteRecursively(Paths.get(info.getBackup_file()).getParent().toFile());
+
+        List<Unit> units = unitRepo.findAll().stream().filter(unit -> workId == unit.getWork().getId())
+                .collect(Collectors.toList());
+        unitRepo.delete(units);
+    }
+
+    @Test
+    public void getDownloadPath_assertDownloadDirectoryName_and_AllHaveBeenTranslated() {
+        // GIVEN project and a work
+        ProjectDto prj = projectService.getProjectDtoByProjectName("Translate IT 22");
+        List<WorkDto> works = workService.getProjectWorkDtos(prj.getId());
+        long workId=works.get(0).getId(); //1;
+
+        // GIVEN uploaded source and target files
+        try {
+            //File fileSource = new File(dotcms_en_utf8);
+            File fileSource = Paths.get("src/test/data/dotcms_en-utf8.properties").toFile();
+            FileInputStream input1 = new FileInputStream(fileSource);
+            MultipartFile multiPartFile1 = new MockMultipartFile("file1",
+                    fileSource.getName(), "text/plain", IOUtils.toByteArray(input1));
+            loadingContractor.uploadSource(multiPartFile1, workId);
+
+            //File fileTarget = new File(dotcms_fi_utf8);
+            File fileTarget = Paths.get("src/test/data/dotcms_fi-utf8.properties").toFile();
+            
+            FileInputStream input2 = new FileInputStream(fileTarget);
+            MultipartFile multiPartFile2 = new MockMultipartFile("file2",
+                    fileTarget.getName(), "text/plain", IOUtils.toByteArray(input2));
+            loadingContractor.uploadTarget(multiPartFile2, workId);
+        }
+        catch (Exception ex) {
+            fail("Unexcepted exception");
+        }
+
+        // WHEN download target file as stream
+        List<Path> paths = new ArrayList<Path>();        
+        assertThatCode(() -> { paths.add(loadingContractor.getDownloadPath(workId)); } )
+        .doesNotThrowAnyException(); 
+
+        // THEN assert stream path count
+        Path downloadPath = paths.get(0);        
+        assertThat(downloadPath, notNullValue());
+        //List<Path> streamPaths = streamPath.map(path -> path.toAbsolutePath()).collect(Collectors.toList());        
+        //assertThat(streamPaths.size(), equalTo(1));
+
+        // and assert download directory name
+        String expectedDownloadDir = fileloader.getDownloadPath("test.txt").getParent().getFileName().toString();
+        String returnedDownloadDir = downloadPath .getParent().getFileName().toString();
         assertThat(expectedDownloadDir,equalTo(returnedDownloadDir));
 
         // remove file from disk and units from database

@@ -27,4 +27,7 @@ public interface FileLoader {
     Stream <Path> storeToDownloadDirectory(final Path temporaryFilePath, 
     		final String downloadFilename);
     
+    Path storeToDownloadDirectory2(final Path temporaryFilePath, 
+    		final String downloadFilename);
+    
 }

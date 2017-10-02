@@ -139,6 +139,51 @@ public class LoadingContractorImpl implements LoadingContractor {
     }
 
     @Override
+    public Path getDownloadPath(final long workId) {
+
+    	if (!(workRepo.exists(workId))) {
+            logger.error("Work with id {} not found.", workId);
+            throw new TranslateIt2Exception(TranslateIt2ErrorCode.CANNOT_UPLOAD_FILE); // or something
+        }
+
+        Work work = workRepo.findOne(workId);
+                
+        // get a map of translated units (i.e source segment and its translation)
+        Map<String, String> map = getSegmentsMap(workId);
+        
+        // get original language file (i.e backup file) into string list
+        LanguageFileFormat format = work.getProject().getFormat();
+        LanguageFileReader reader = fileReaderCache.getService(format).get();
+        String backupFile = getBackupFileName(workId);
+        // we don't validate backup file since we did it during the upload phase  
+        List<String> originalFileAsList = reader.getOriginalFileAsList(Paths.get(backupFile),getCharSet(workId));
+        
+        // merge the map of translated units with the original language file
+        ILanguageFileWriter writer = 
+    			formatFactoryRegistry.getFactory(LanguageFileFormat.PROPERTIES).getWriter();
+
+    	// LanguageFileWriter writer = fileWriterCache.getService(format).get();
+        List<String> downloadFileAsList = writer.mergeWithOriginalFile(map, originalFileAsList);
+        
+        // create filename for the download file
+        String originalFileName = work.getOriginalFile();
+        Locale locale = work.getLocale();
+        Charset charset = getCharSet(workId);
+        String downloadFilename = fileNameResolver.getDownloadFilename(originalFileName,locale,format);
+
+        // store into a temporary file in permanent location
+        Path tmpFilePath = filelocator.createFileIntoPermanentFileSystem(downloadFileAsList, format, charset);
+        
+        // move file from permanent location to download directory
+        Path downloadStreamPath = fileloader.storeToDownloadDirectory2(tmpFilePath,downloadFilename);
+        
+        // delete temporary file
+        filelocator.deleteFileFromPermanentFileSystem(tmpFilePath);
+        
+        return downloadStreamPath;
+    }
+
+    @Override
     public void uploadTarget(final MultipartFile multipartFile, final long workId) {
         if (!(workRepo.exists(workId))) {
             logger.error("Work with id {} not found.", workId);

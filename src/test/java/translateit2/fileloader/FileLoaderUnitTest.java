@@ -138,7 +138,7 @@ public class FileLoaderUnitTest {
     }
 
     @Test
-    public void storeFileToDownloadDirectory_assertParentDirectoryy() {
+    public void storeFileToDownloadDirectory_assertParentDirectory() {
         Path tmpFilePath = Paths.get("src/test/data/dotcms_temp.properties");
 
         try {
@@ -148,18 +148,50 @@ public class FileLoaderUnitTest {
         }
         String downloadFilename = "dotcms_download.properties";
 
-        List<Stream<Path>> paths = new ArrayList<Stream<Path>>();        
+        List<Stream<Path>> paths = new ArrayList<Stream<Path>>();
+        // List<Path> paths = new ArrayList<Path>();        
+        
         assertThatCode(() -> { paths.add(fileloader().storeToDownloadDirectory(tmpFilePath,downloadFilename)); } )
         .doesNotThrowAnyException(); 
 
         // assert stream name count
         Stream<Path> streamPath = paths.get(0);        
+        //Path streamPath = paths.get(0);        
         List<Path> streamPaths = streamPath.map(path -> path.toAbsolutePath()).collect(Collectors.toList());        
 
-        assertThat(streamPaths.size(), equalTo(1));
+        // assertThat(streamPaths.size(), equalTo(1));
 
         String expectedDownloadDir = fileloader().getDownloadPath("test.txt").getParent().getFileName().toString();
         String returnedDownloadDir = streamPaths.get(0).getParent().getFileName().toString();
+        assertThat(expectedDownloadDir,equalTo(returnedDownloadDir));
+    }
+
+    @Test
+    public void storeFileToDownloadDirectory2_assertParentDirectory() {
+        Path tmpFilePath = Paths.get("src/test/data/dotcms_temp.properties");
+
+        try {
+            Files.copy(Paths.get("src/test/data/dotcms_fi-utf8.properties"), tmpFilePath,StandardCopyOption.REPLACE_EXISTING );
+        } catch (IOException e) {
+            fail("Unexpected exception");
+        }
+        String downloadFilename = "dotcms_download.properties";
+
+        // List<Stream<Path>> paths = new ArrayList<Stream<Path>>();
+        List<Path> paths = new ArrayList<Path>();        
+        
+        assertThatCode(() -> { paths.add(fileloader().storeToDownloadDirectory2(tmpFilePath,downloadFilename)); } )
+        .doesNotThrowAnyException(); 
+
+        // assert stream name count
+        // Stream<Path> streamPath = paths.get(0);        
+        Path downlaodPath = paths.get(0);        
+        // List<Path> streamPaths = streamPath.map(path -> path.toAbsolutePath()).collect(Collectors.toList());        
+
+        // assertThat(streamPaths.size(), equalTo(1));
+
+        String expectedDownloadDir = fileloader().getDownloadPath("test.txt").getParent().getFileName().toString();
+        String returnedDownloadDir = downlaodPath.getParent().getFileName().toString();
         assertThat(expectedDownloadDir,equalTo(returnedDownloadDir));
     }
 

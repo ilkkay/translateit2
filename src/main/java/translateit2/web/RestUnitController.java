@@ -61,9 +61,14 @@ public class RestUnitController {
         logger.info("Creating url path for workId {}", id);
 
         try {
+        
             Stream<Path> downloadStream = loadingContractor.downloadTarget(id);
             String filename = "/api/files/" + downloadStream.findFirst().get().getFileName().toString();
             UriComponents uriComponents = ucBuilder.scheme("http").host("localhost").path(filename).build();
+            
+            Path downloadPath = loadingContractor.getDownloadPath(id);
+            String filename2 = "/api/files/" + downloadPath.toString();
+            UriComponents uriComponents2 = ucBuilder.scheme("http").host("localhost").path(filename).build();
 
             return new ResponseEntity<>(uriComponents, HttpStatus.OK);
 
