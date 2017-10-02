@@ -1,4 +1,4 @@
-package directorcreator;
+package translateit2.directorcreator;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -45,7 +45,8 @@ public class DirectorCreatorUnitTest {
 		assertThatCode(() -> { paths.add(directoryCreator().getDownloadDirectory()); } )
 		.doesNotThrowAnyException(); 
 
-        Path expectedDir = Paths.get("").toAbsolutePath().getParent().resolve(testRootTemporaryDirectory).resolve(testDownloadDir);
+        Path expectedDir = Paths.get("").toAbsolutePath().getParent()
+        		.resolve(testRootTemporaryDirectory).resolve(testDownloadDir);
 
         // assert that the directory exists
         assertThat(expectedDir, equalTo(paths.get(0)));
