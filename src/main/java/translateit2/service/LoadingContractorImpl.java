@@ -16,6 +16,7 @@ import javax.transaction.Transactional;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -27,9 +28,14 @@ import translateit2.exception.TranslateIt2Exception;
 import translateit2.fileloader.FileLoader;
 import translateit2.filelocator.FileLocator;
 import translateit2.filenameresolver.FileNameResolver;
+import translateit2.formatfactory.FormatFactory;
+import translateit2.formatfactory.FormatFactoryRegistry;
 import translateit2.languagebeancache.LanguageBeanCache;
+import translateit2.languagebeancache.reader.ILanguageFileReader;
 import translateit2.languagebeancache.reader.LanguageFileReader;
+import translateit2.languagebeancache.validator.ILanguageFileValidator;
 import translateit2.languagebeancache.validator.LanguageFileValidator;
+import translateit2.languagebeancache.writer.ILanguageFileWriter;
 import translateit2.languagebeancache.writer.LanguageFileWriter;
 import translateit2.languagefile.LanguageFileFormat;
 import translateit2.languagefile.LanguageFileType;
@@ -84,9 +90,13 @@ public class LoadingContractorImpl implements LoadingContractor {
     @Autowired
     private UnitRepository unitRepo;
 
+	@Autowired 
+	FormatFactoryRegistry formatFactoryRegistry;	
+	    	
     @Override
     public Stream <Path> downloadTarget(final long workId) {
-        if (!(workRepo.exists(workId))) {
+
+    	if (!(workRepo.exists(workId))) {
             logger.error("Work with id {} not found.", workId);
             throw new TranslateIt2Exception(TranslateIt2ErrorCode.CANNOT_UPLOAD_FILE); // or something
         }
@@ -104,7 +114,10 @@ public class LoadingContractorImpl implements LoadingContractor {
         List<String> originalFileAsList = reader.getOriginalFileAsList(Paths.get(backupFile),getCharSet(workId));
         
         // merge the map of translated units with the original language file
-        LanguageFileWriter writer = fileWriterCache.getService(format).get();
+        ILanguageFileWriter writer = 
+    			formatFactoryRegistry.getFactory(LanguageFileFormat.PROPERTIES).getWriter();
+
+    	// LanguageFileWriter writer = fileWriterCache.getService(format).get();
         List<String> downloadFileAsList = writer.mergeWithOriginalFile(map, originalFileAsList);
         
         // create filename for the download file
@@ -151,7 +164,11 @@ public class LoadingContractorImpl implements LoadingContractor {
         validator.validateLocale(appLocale, getExpectedTargetLocale(workId));
 
         // read key/values pairs from the language file
-        LanguageFileReader reader = fileReaderCache.getService(format).get();
+        // merge the map of translated units with the original language file
+        ILanguageFileReader reader = 
+    			formatFactoryRegistry.getFactory(LanguageFileFormat.PROPERTIES).getReader();
+
+        //LanguageFileReader reader = fileReaderCache.getService(format).get();
         LinkedHashMap<String, String> segments = (LinkedHashMap<String, String>)reader.
                 getSegments(uploadedFile, getCharSet(workId));
 
@@ -192,7 +209,12 @@ public class LoadingContractorImpl implements LoadingContractor {
                 ext -> ext.equals(format.toString().toLowerCase()));
 
         // validate character set used in file 
-        LanguageFileValidator validator = fileValidatorCache.getService(format).get();
+        // merge the map of translated units with the original language file
+        ILanguageFileValidator validator = 
+    			formatFactoryRegistry.getFactory(LanguageFileFormat.PROPERTIES).getValidator();
+
+        
+        //LanguageFileValidator validator = fileValidatorCache.getService(format).get();
         validator.validateCharacterSet(uploadedFile, getExpectedType(workId));   
         validator.validateLocale(appLocale, getExpectedSourceLocale(workId));
 
