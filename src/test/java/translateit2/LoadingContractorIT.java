@@ -363,7 +363,7 @@ public class LoadingContractorIT {
 
         // WHEN download target file as stream
         List<Path> paths = new ArrayList<Path>();        
-        assertThatCode(() -> { paths.add(loadingContractor.getDownloadPath(workId)); } )
+        assertThatCode(() -> { paths.add(loadingContractor.getDownloadFile(workId)); } )
         .doesNotThrowAnyException(); 
 
         // THEN assert stream path count

@@ -139,7 +139,7 @@ public class LoadingContractorImpl implements LoadingContractor {
     }
 
     @Override
-    public Path getDownloadPath(final long workId) {
+    public Path getDownloadFile(final long workId) {
 
     	if (!(workRepo.exists(workId))) {
             logger.error("Work with id {} not found.", workId);

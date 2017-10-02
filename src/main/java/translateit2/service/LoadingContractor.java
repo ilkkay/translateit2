@@ -11,7 +11,7 @@ public interface LoadingContractor {
 
     Stream <Path> downloadTarget(final long workId);
     
-    Path getDownloadPath(final long workId);
+    Path getDownloadFile(final long workId);
     
     void uploadSource(final MultipartFile file, final long workId);
     
