@@ -78,7 +78,6 @@ public class DirectorCreatorUnitTest {
 		props.setUploadLocation(testUploadDir);
 		props.setDownloadLocation(testDownloadDir);
 		props.setPermanentLocation(testPermanentDir);
-		props.setRootPermanentDirectory(testRootPermanentDir);
 
 		Path tempDir = Paths.get("").toAbsolutePath().getParent().resolve(testRootTemporaryDirectory);
 		props.setRootTemporaryDirectory(tempDir.toString());
