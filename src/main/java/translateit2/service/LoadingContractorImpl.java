@@ -29,10 +29,11 @@ import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-// note [MD] @EnableTransactionManagement - why here?
+// note [MD] (3) @EnableTransactionManagement - why here?
 @EnableTransactionManagement
 @Service
 public class LoadingContractorImpl implements LoadingContractor {
@@ -195,10 +196,42 @@ public class LoadingContractorImpl implements LoadingContractor {
         // if there has been a rollback, we need to remove the uploaded file
         // and notify what has happened
         // test something somewhere (javax.persistence.RollbackException)
-        loadSourceSegmentsToDatabase(originalFileName, appName, appLocale, uploadedFilePath, segments, workId);       
+        loadSourceSegmentsToDatabase(originalFileName, appName, appLocale, uploadedFilePath, segments, workId);
+
+        // note [MD] (3) example of transaction helper usage (bundleHelper should be a bean & autowired into this class)
+//        final TransactionBundleHelper bundleHelper = new TransactionBundleHelper();
+//        bundleHelper.inReadOnlyTransaction(() -> loadSourceSegmentsToDatabase(originalFileName, appName, appLocale, uploadedFilePath, segments, workId));
 
         // commit that file processing has finished  
     }
+
+    // note [MD] (3) helper itself
+/*
+    @Component
+    public static class TransactionBundleHelper {
+
+        @org.springframework.transaction.annotation.Transactional(readOnly = true)
+        public void inReadOnlyTransaction(Runnable task) {
+            task.run();
+        }
+
+        @org.springframework.transaction.annotation.Transactional
+        public void inTransaction(Runnable task) {
+            task.run();
+        }
+
+        @org.springframework.transaction.annotation.Transactional(readOnly = true)
+        public <T> T inReadOnlyTransaction(Supplier<T> task) {
+            return task.get();
+        }
+
+        @org.springframework.transaction.annotation.Transactional
+        public <T> T inTransaction(Supplier<T> task) {
+            return task.get();
+        }
+
+    }
+*/
 
     @Transactional
     private void loadTargetSegmentsToDatabase(final HashMap<String, String> segments, final long workId) {
@@ -239,10 +272,10 @@ public class LoadingContractorImpl implements LoadingContractor {
         return true;
     }
 
-    // note [MD] suspicious @Transactional private methods
+    // note [MD] (3) suspicious @Transactional private methods
     @Transactional
     private void removeUnitDtos(final long workId) {
-        // note [MD] pretty un-SQLish way to do this
+        // note [MD] (3) pretty un-SQLish way to do this
         List<Unit> units = unitRepo.findAll().stream().filter(unit -> workId == unit.getWork().getId())
                 .collect(Collectors.toList());
         unitRepo.delete(units);        
@@ -250,7 +283,7 @@ public class LoadingContractorImpl implements LoadingContractor {
 
     @Transactional
     private Locale getExpectedSourceLocale(final long workId) {
-        // note [MD] repeated find, unused variable (same repeats below)
+        // note [MD] (3) repeated find, unused variable (same repeats below)
         Project project = workRepo.findOne(workId).getProject();
         return workRepo.findOne(workId).getProject().getSourceLocale();
     }
@@ -281,7 +314,7 @@ public class LoadingContractorImpl implements LoadingContractor {
     
     @Transactional
     private Map<String, String> getSegmentsMap(final long workId) {
-        // note [MD] using a toMap collector here would be a more streamish way to do the whole thing here
+        // note [MD] (3) using a toMap collector here would be a more streamish way to do the whole thing here
         List<Unit> units = unitRepo.findAll().stream().filter(unit -> workId == unit.getWork().getId())
                 .collect(Collectors.toList());
         Map<String, String> map = new HashMap<String, String>();

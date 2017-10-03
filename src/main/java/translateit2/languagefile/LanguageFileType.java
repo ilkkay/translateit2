@@ -1,6 +1,6 @@
 package translateit2.languagefile;
 
-// note [MD] sounds like encoding?
+// note [MD] (3) sounds like encoding?
 
 public enum LanguageFileType {
     ISO8859_1, // http://crunchify.com/why-and-for-what-should-i-use-enum-java-enum-examples/

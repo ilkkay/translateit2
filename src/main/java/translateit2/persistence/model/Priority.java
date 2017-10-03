@@ -16,6 +16,6 @@ public enum Priority {
     }
     */
 
-    // note [MD] unnatural order of values
+    // note [MD] (3) unnatural order of values
     HIGH, LOW, MEDIUM;
 }

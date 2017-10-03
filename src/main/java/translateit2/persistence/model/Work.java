@@ -30,7 +30,6 @@ public class Work implements Serializable {
 
     @NotNull
     @Size (min = 1, max = 10)
-    // note [MD] regexp seems odd
     @Pattern(regexp=".*[[0-9][\\.]]")
     private String version;
     
@@ -100,7 +99,7 @@ public class Work implements Serializable {
         return priority;
     }
 
-    // note [MD] double?
+    // note [MD] (3) double?
     public double getProgress() {
         return progress;
     }

@@ -54,7 +54,7 @@ public class MessageLogicUnitTest {
     	assert("ei voi olla null".equals(retrievedMsg));
 
     	retrievedMsg = messages.get("org.hibernate.validator.constraints.NotBlank.message");
-        // note [MD] uses JVM-assertion, probably not what was intended
+        // note [MD] (3) uses JVM-assertion, probably not what was intended
         assert("ei voi olla tyhjä".equals(retrievedMsg));
 
 

@@ -103,7 +103,7 @@ public class ProjectDto {
      */
     @Override
     public boolean equals(Object obj) {
-        // note [MD] == false
+        // note [MD] (3) == false
         if (obj instanceof ProjectDto == false) {
             return false;
         }
@@ -112,8 +112,9 @@ public class ProjectDto {
         }
         final ProjectDto otherObject = (ProjectDto) obj;
 
-        // note [MD] formatting
-        return new EqualsBuilder().append(this.id, otherObject.id).append(this.personId, otherObject.personId)
+        // note [MD] (3) formatting
+        return new EqualsBuilder()
+                .append(this.id, otherObject.id).append(this.personId, otherObject.personId)
                 .append(this.name, otherObject.name)
                 .append(this.format, otherObject.format).append(this.charset, otherObject.charset)
                 .append(this.sourceLocale, otherObject.sourceLocale).isEquals();

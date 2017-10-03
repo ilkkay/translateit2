@@ -16,7 +16,9 @@ public class FileInfo implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    // note [MD] variable naming & property naming
+    // note [MD] (3) variable naming & property naming
+    //@Column(name = "original_file")
+    // private String originalFile;
     private String original_file;
 
     private String skeleton_file;

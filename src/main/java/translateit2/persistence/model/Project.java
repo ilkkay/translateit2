@@ -84,6 +84,7 @@ public class Project implements Serializable {
         this.charset = type;
     }
 
+    // note [MD] (3) toString on entity risks unwanted proxy resolution
     @Override
     public String toString() {
         return new ToStringBuilder(this).append("id", id).append("person", person)

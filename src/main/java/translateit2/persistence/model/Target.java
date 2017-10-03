@@ -90,7 +90,6 @@ public class Target {
         this.text = text;
     }
 
-    // note [MD] toString on entity risks unwanted proxy resolution
     @Override
     public String toString() {
         return new ToStringBuilder(this).append("text", text).append("plural", plural).append("state", state)
