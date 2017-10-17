@@ -87,7 +87,7 @@ public class ProjectServiceImpl implements ProjectService {
         return groupDto;
     }
 
-    // note [MD] missing @Transactional annotations
+    // note [MD] (4) missing @Transactional annotations
     @Override
     public TranslatorGroupDto getGroupDtoByName(String name) {
         logger.log(getLoggerLevel(), "Entering getGroupDtoByName with {}", name.toString());
